@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core">
+      
+    <p:layoutUnit header="#{msg.titulo_panel_cadastro_historico}" styleClass="fundo" position="center"> 
+		<h:form id="frmProduto" prependId="false">
+			<div align="center">
+				<p:panel id="cadastrohistorico" styleClass="cadastrohistorico" style="width:840px;">
+					<h:panelGrid id="grid" columns="2">
+						<h:outputText value="#{msg.label_cadastro_historico}" />
+						<p:inputText id="historico" size="50" value="#{historicoController.historicoFinanceiroPOJO.historico}"/>
+						
+						<p:commandButton id="botaoCadastrarHistorico" value="#{msg.botao_cadastro_produto}" action="#{historicoController.cadastrarHistoricoFinanceiro}" update="grid, messageHistorico" icon="ui-icon-disk"/>
+						<p:growl id="messageHistorico" showDetail="true" sticky="true" />
+					</h:panelGrid>
+				</p:panel>	
+			</div>
+		</h:form>
+	</p:layoutUnit>
+</ui:composition>

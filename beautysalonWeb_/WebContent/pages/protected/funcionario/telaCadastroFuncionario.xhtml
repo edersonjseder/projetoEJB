@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core">
+
+	<p:layoutUnit position="center">
+		<h:form id="frmFunc" prependId="false">
+			<p:wizard widgetVar="wiz" flowListener="#{funcionarioController.onFlowProcess}">
+			   	<div align="center">
+					<p:tab id="dadosPessoais" title="Dados Pessoais">
+						<p:panel id="cadastrofuncionariosDadosPessoais" styleClass="cadastrofuncionarios" header="Dados Pessoais" style="width:840px;">
+							<h:panelGrid id="personal" columns="2">
+								<h:outputText value="#{msg.label_nome_funcionario}" />
+								<p:inputText id="nomeFuncionario" size="40" value="#{funcionarioController.funcionario.nome}" required="true" onblur="testarJS();" />
+								
+								<h:outputText value="#{msg.label_cpf_func}" />
+								<p:inputMask mask="999.999.999-99" id="cpf" onblur="consistenciaCPF(this.value);" size="16" value="#{funcionarioController.funcionario.cpf}" required="true"/>
+								
+								<h:outputText value="#{msg.label_sexo_func}" />
+								<p:selectOneRadio value="#{funcionarioController.funcionario.sexo}" id="sexo">
+									<f:selectItem itemLabel="Masculino" itemValue="M"/>
+									<f:selectItem itemLabel="Feminino" itemValue="F"/>
+								</p:selectOneRadio>
+										
+								<h:outputText value="#{msg.label_data_nasc_funcionario}" />
+								<p:calendar onkeypress="formatar(this, '##/##/####');" effect="slideDown" pattern="dd/MM/yyyy" size="11" id="dtNascimento" value="#{funcionarioController.funcionario.dataNascimento}"/>
+										
+								<h:outputText value="#{msg.label_telefone_funcionario}" />
+								<p:inputMask id="telefone" mask="(99) 9999-9999" size="16" value="#{funcionarioController.funcionario.telefone}"/>
+								
+								<h:outputText value="#{msg.label_email_funcionario}" />
+								<p:inputText id="email" size="40" onblur="validarEmail();" value="#{funcionarioController.funcionario.email}"/>
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+					
+					<p:tab id="dadosProfissionais" title="Dados Profissionais">
+						<p:panel id="cadastrofuncionariosDadosProfissionais" styleClass="cadastrofuncionarios" header="Dados Profissionais" style="width:840px;">
+							<h:panelGrid id="professional" columns="2">
+								<h:outputText value="#{msg.label_cargo}" />
+								<p:inputText id="cargo" size="40" value="#{funcionarioController.funcionario.cargo}"/>
+								
+								<h:outputText value="#{msg.label_remuneracao}" />
+								<p:inputText id="remuneracao" onkeyup="moeda(this);" size="10" maxlength="10" value="#{funcionarioController.remuneracao}"/>
+								
+								<h:outputText value="#{msg.label_data_admissao}" />
+								<p:calendar onkeypress="formatar(this, '##/##/####');" effect="slideDown" pattern="dd/MM/yyyy" size="11" id="dtAdmissao" value="#{funcionarioController.funcionario.dataAdmissao}"/>
+								
+								<h:outputText value="#{msg.label_status_funcionario}" />
+								<p:selectBooleanCheckbox id="ativo" value="#{funcionarioController.ativo}" valueChangeListener="#{funcionarioController.habilitarDesabilitarCampoDataDemissao}" itemLabel="Ativo" />
+								
+								<h:outputText value="#{msg.label_data_demissao}" />
+								<p:calendar onkeypress="formatar(this, '##/##/####');" effect="slideDown" pattern="dd/MM/yyyy" size="10" id="dtDemissao" binding="#{funcionarioController.dataDemissaoComponent}" value="#{funcionarioController.funcionario.dataDemissao}"/>
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+					
+					<p:tab id="dadosEndereco" title="Endereço">
+						<p:panel id="cadastroEndereco" styleClass="cadastrofuncionarios" header="Dados de Endereço" style="width:840px;">
+							<h:panelGrid id="address" columns="2">
+								<h:outputText value="#{msg.label_endereco_func}" />
+						    	<p:inputText id="endereco" size="40" value="#{funcionarioController.funcionario.endereco.endereco}"/>
+								
+								<h:outputText value="#{msg.label_bairro_func}" />
+								<p:inputText id="bairro" size="20" value="#{funcionarioController.funcionario.endereco.bairro}"/>
+								
+								<h:outputText value="#{msg.label_estado_func}" />
+						    	<p:selectOneMenu value="#{funcionarioController.idEstado}" id="estado">
+						    		<f:selectItem itemLabel="Selecione..." itemValue=""/>
+						    		<f:selectItems value="#{funcionarioController.listaEstados}" var="estados" itemLabel="#{estados.nome}" itemValue="#{estados.id}"/>
+						    		<p:ajax event="change" listener="#{funcionarioController.pesquisarCidades}" update="cidade"/>
+						    	</p:selectOneMenu>
+								
+								<h:outputText value="#{msg.label_municipio_func}" />
+						    	<p:selectOneMenu value="#{funcionarioController.idCidade}" id="cidade" binding="#{funcionarioController.comboCidade}" disabled="true">
+						    		<f:selectItem itemLabel="Selecione..." itemValue=""/>
+						    		<f:selectItems value="#{funcionarioController.listaCidades}" var="cidades" itemLabel="#{cidades.nome}" itemValue="#{cidades.id}"/>
+						    	</p:selectOneMenu>								
+								
+								<h:outputText value="#{msg.label_cep}" />
+								<p:inputMask mask="99999-999" value="#{funcionarioController.funcionario.endereco.cep}" required="true" requiredMessage="#{msg.mensagem_cep_obrigatorio}" id="cep" size="11"/>			
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+					
+					<p:tab id="dadosLogin" title="Dados de Login">
+						<p:panel id="cadastroDadosLogin" styleClass="cadastrofuncionarios" header="Dados de Login" style="width:840px;">
+							<h:panelGrid id="loginData" columns="2">
+								<h:outputText value="#{msg.label_login_funcionario}" />
+								<p:inputText id="login" size="20" required="true" value="#{funcionarioController.funcionario.user.login}"/>
+								
+								<h:outputText value="#{msg.label_senha_funcionario}" />
+								<p:password id="senha" size="20" required="true" value="#{funcionarioController.senha}"/>
+								
+								<h:outputText value="#{msg.label_confirma_funcionario}" />
+								<p:password id="confirmaSenha" size="20" required="true" value="#{funcionarioController.confirmaSenha}"/>
+				
+								<h:outputText value="#{msg.label_grupo_funcionario}" />
+								<p:selectOneMenu value="#{funcionarioController.funcionario.userRole.role}" id="role">
+									<f:selectItem itemLabel="Selecione.." itemValue=""/>
+						    		<f:selectItem itemLabel="Administrador" itemValue="administrador"/>
+						    		<f:selectItem itemLabel="Atendente" itemValue="atendente"/>
+						    		<f:selectItem itemLabel="Caixa" itemValue="caixa"/>
+						    		<f:selectItem itemLabel="Gerência" itemValue="gerente"/>
+						    	</p:selectOneMenu>
+						    	
+				    			<p:commandButton id="botaoCadastrarFuncionario" value="#{msg.botao_cadastro_funcionario}" update="messageFuncionario" icon="ui-icon-disk" action="#{funcionarioController.cadastrarFuncionario}"/>
+								<p:growl id="messageFuncionario" showDetail="true" sticky="true" />			
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+				</div>
+			</p:wizard> 
+		</h:form>
+    </p:layoutUnit>
+</ui:composition>

@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	 xmlns:p="http://primefaces.org/ui"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets">
+ 	
+ 	<p:layoutUnit header="#{msg.titulo_panel_caixa}" position="center">
+ 		<h:form id="frmCaixa" prependId="false">
+ 			<div align="center">
+	 			<p:panel id="cadastrocaixa" styleClass="cadastrocaixa" style="width:737px;">
+	 				<h:panelGrid id="grid" columns="2" border="0">
+	 					<h:outputText value="#{msg.label_caixa_saldo_dinheiro}" />
+	 					<h:panelGroup>
+					    	<p:inputText id="saldoAtualDinheiro" disabled="true" onkeyup="moeda(this);" binding="#{caixaController.saldoCaixaDinheiro}" size="15" maxlength="10" />
+	 						<h:outputText value="#{msg.label_caixa_saldo_di}" />
+	 					</h:panelGroup>
+	 					
+	 					<h:outputText value="#{msg.label_caixa_saldo_cheque}" />
+	 					<h:panelGroup>
+					    	<p:inputText id="saldoAtualCheque" disabled="true" onkeyup="moeda(this);" binding="#{caixaController.saldoCaixaCheque}" size="15" maxlength="10" />
+	 						<h:outputText value="#{msg.label_caixa_saldo_ch}" />
+	 					</h:panelGroup>
+	 				
+	 					<h:outputText value="#{msg.label_caixa_data}" />
+						<p:calendar locale="pt" showButtonPanel="true" onkeypress="formatar(this, '##/##/####');" effect="slideDown" pattern="dd/MM/yyyy" size="12" id="dataLancamento" binding="#{caixaController.dataAtual}"/>
+						
+						<h:outputText value="#{msg.label_caixa_historico}" />
+						<p:selectOneMenu id="historico" styleClass="historico" value="#{caixaController.caixa.historico}">
+				    		<f:selectItem itemLabel="Selecione.." itemValue=""/>
+							<f:selectItems value="#{caixaController.listaHistoricoFinanceiro}" var="historicos" itemLabel="#{historicos.historico}" itemValue="#{historicos.historico}"/>			    		
+				    	</p:selectOneMenu>
+				    	
+						<h:outputText value="#{msg.label_caixa_descricao}" />
+				    	<p:inputText id="descricao" size="40" value="#{caixaController.caixa.descricao}"/>
+				    	
+						<h:outputText value="#{msg.label_caixa_tipo}" />
+				    	<p:selectOneRadio id="tipo" styleClass="tipo" value="#{caixaController.selectedTipo}">
+							<f:selectItem itemLabel="Entrada" itemValue="Entrada"/>
+							<f:selectItem itemLabel="Saída" itemValue="Saida"/>
+						</p:selectOneRadio>
+				    	
+						<h:outputText value="#{msg.label_caixa_especie}" />
+				    	<p:selectOneRadio id="especie" styleClass="especie" value="#{caixaController.selectedEspecie}">
+				    		<f:selectItem itemLabel="Dinheiro" itemValue="Cheque"/>
+				    		<f:selectItem itemLabel="Cheque" itemValue="Dinheiro"/>
+				    		<f:ajax render="grid"/>
+						</p:selectOneRadio>
+				    	
+				    	<h:outputText value="#{msg.label_caixa_banco}" />
+						<p:inputText id="numBanco" size="10" maxlength="5" onkeypress="valNumeros(event, this);" value="#{caixaController.caixa.banco}" disabled="#{caixaController.selectedEspecie == 'Cheque'}"/>
+				    	
+				    	<h:outputText value="#{msg.label_caixa_conta}" />
+						<p:inputText id="numConta" size="15" maxlength="10" onkeypress="valNumeros(event, this);" value="#{caixaController.caixa.conta}" disabled="#{caixaController.selectedEspecie == 'Cheque'}"/>
+				    	
+				    	<h:outputText value="#{msg.label_caixa_cheque}" />
+						<p:inputText id="numCheque" size="15" maxlength="8" value="#{caixaController.caixa.nroCheque}" disabled="#{caixaController.selectedEspecie == 'Cheque'}"/>
+				    	
+				    	<h:outputText value="#{msg.label_caixa_valor}" />
+				    	<p:inputText id="valor" onkeyup="moeda(this);" size="15" maxlength="10" value="#{caixaController.valor}"/>
+				    	
+						<p:commandButton id="botaoCadastrarCaixa" value="#{msg.botao_cadastro_caixa}" action="#{caixaController.cadastrarCaixa}" update="grid, messageCaixa" icon="ui-icon-disk"/>
+						<p:growl id="messageCaixa" showDetail="true" sticky="true" />				    					    					    																	
+	 				</h:panelGrid>
+	 			</p:panel>
+ 			</div>
+ 		</h:form>
+ 	</p:layoutUnit>	    
+</ui:composition>

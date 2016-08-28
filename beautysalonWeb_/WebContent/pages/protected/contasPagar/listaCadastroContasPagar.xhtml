@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"
+      template="/pages/protected/template/telaHome.xhtml">
+      
+    <ui:define name="header">
+         <ui:include src="/pages/protected/template/header/header.xhtml"/>
+    </ui:define>
+      
+	<ui:define name="corpo">
+		<p:layoutUnit position="center" header="Lista de Contas a Pagar">
+		<h:form id="formContasPagar">
+			<p:panel id="listacontaspagar" styleClass="listacontaspagar" style="float:center; width:1430px;">
+				
+				<div align="center">
+					<p:dataTable id="tableContasPagar" var="contasPagar" value="#{contasPagarController.listaContasPagarDataModel}" rowKey="#{contasPagar.id}" emptyMessage="#{msg.mensagem_empty_lista}"
+								 paginator="true" selection="#{contasPagarController.contasPagarSelected}" selectionMode="single" tableStyle="width:auto;" rows="4">
+		                
+		                <p:ajax event="rowSelect" update=":formContasPagar:display" oncomplete="contasPagarDialog.show()"/>
+		                <p:ajax event="rowDblselect" listener="#{contasPagarController.onRowDblselect}" />
+		                
+			   			<p:column sortBy="#{contasPagar.dataVencimento}" filterBy="#{contasPagar.dataVencimento}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Vencimento" />  
+				            </f:facet>		   			  
+				        	<h:outputText value="#{contasPagar.dataVencimento}" />
+				        </p:column>		                
+		                
+			   			<p:column sortBy="#{contasPagar.dataPagamento}" filterBy="#{contasPagar.dataPagamento}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Pagamento" />  
+				            </f:facet>		   			  
+				        	<h:outputText value="#{contasPagar.dataPagamento}" />
+				        </p:column>		                
+		                
+			   			<p:column sortBy="#{contasPagar.credor}" width="210" filterBy="#{contasPagar.credor}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Credor" />  
+				            </f:facet>		   			  
+				        	<h:outputText value="#{contasPagar.credor}" />
+				        </p:column>		                
+		                
+			   			<p:column sortBy="#{contasPagar.documento}" width="240" filterBy="#{contasPagar.documento}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Documento" />  
+				            </f:facet>
+				        	<h:outputText value="#{contasPagar.documento}" />   
+				        </p:column>
+				                         
+			   			<p:column sortBy="#{contasPagar.valorParcela}" filterBy="#{contasPagar.valorParcela}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Valor da Parcela" />  
+				            </f:facet>		   			  
+				        	<h:outputText value="#{contasPagar.valorParcela}" />
+				        </p:column>
+				                         
+			   			<p:column sortBy="#{contasPagar.valorAPagar}" filterBy="#{contasPagar.valorAPagar}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Valor a Pagar" />  
+				            </f:facet>		   			  
+				        	<h:outputText value="#{contasPagar.valorAPagar}" />
+				        </p:column>
+				                         
+			   			<p:column sortBy="#{contasPagar.valorPago}" filterBy="#{contasPagar.valorPago}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Valor Pago" />  
+				            </f:facet>		   			  
+				        	<h:outputText value="#{contasPagar.valorPago}" />
+				        </p:column>
+				                         
+			   			<p:column sortBy="#{contasPagar.totalAPagar}" filterBy="#{contasPagar.totalAPagar}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Total a Pagar" />  
+				            </f:facet>		   			  
+				        	<h:outputText value="#{contasPagar.totalAPagar}" />
+				        </p:column>
+				                         
+			   			<p:column sortBy="#{contasPagar.statusContasPagar}" filterBy="#{contasPagar.statusContasPagar}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Status" />  
+				            </f:facet>		   			  
+				        	<h:outputText value="#{contasPagar.statusContasPagar}" />
+				        </p:column>
+				                         
+	                </p:dataTable>
+                </div>
+                
+	             <p:dialog id="dialogContasPagar" header="Contas a Pagar" widgetVar="contasPagarDialog" resizable="false"  
+	              			showEffect="explode" hideEffect="explode">  
+			  		<p:growl id="messageContasPagar" showDetail="true" sticky="true" />
+			        <h:panelGrid id="display" columns="2" cellpadding="4">  
+			  
+			            <f:facet name="header">  
+			                <h:outputText value="Contas a Pagar" />  
+			            </f:facet>  
+			  
+			            <h:outputText value="Data Vencimento:" />  
+			            <p:inputText size="12" value="#{contasPagarController.contasPagarSelected.dataVencimento}" onkeypress="formatar(this, '##/##/####');" disabled="true"/> 
+			  
+			            <h:outputText value="Credor a Pagar:" />
+						<p:inputText size="30" value="#{contasPagarController.contasPagarSelected.credor}"/>
+			  
+			            <h:outputText value="Parcelas:" />  
+			            <p:inputText onkeypress="return numero(event);" size="4" value="#{contasPagarController.contasPagarSelected.nroParcelas}" />
+			            
+						<h:outputText value="Parcelas Pagas:" />  
+			            <p:inputText onkeypress="return numero(event);" size="4" value="#{contasPagarController.contasPagarSelected.nroParcelasPagas}" disabled="true"/>			            
+			            
+						<h:outputText value="Parcelas a Pagar:" />  
+			            <p:inputText onkeypress="return numero(event);" size="4" value="#{contasPagarController.contasPagarSelected.nroParcelasAPagar}" disabled="true"/>  
+			            
+			            <h:outputText value="Valor das Parcelas:" />  
+			            <p:inputText onkeyup="moeda(this);" size="15" value="#{contasPagarController.contasPagarSelected.valorParcela}" />
+			  
+			            <h:outputText value="Total a Pagar:" />  
+			            <p:inputText onkeyup="moeda(this);" size="15" value="#{contasPagarController.contasPagarSelected.totalAPagar}" />  
+			            
+						<h:outputText value="#{msg.label_contas_pagar_status}" />
+				    	<p:selectOneMenu id="status" value="#{contasPagarController.contasPagarSelected.statusContasPagar}" >
+				    		<f:selectItem itemLabel="Pendente" itemValue="Pendente"/>
+				    		<f:selectItem itemLabel="Cancelada" itemValue="Cancelada"/>
+				    		<f:selectItem itemLabel="Deferida" itemValue="Deferida"/>
+				    	</p:selectOneMenu>			              
+			        </h:panelGrid>
+			        <h:panelGrid columns="3" cellpadding="15">
+			            <p:commandButton action="#{contasPagarController.alterarContasAPagar}" value="#{msg.botao_atualizar_dialog}" icon="ui-icon-arrowrefresh-1-w" oncomplete="contasPagarDialog.hide(); #{contasPagarController.listaContasPagarDataModel}"/>  
+			            <p:commandButton action="#{contasPagarController.darBaixa}" value="#{msg.botao_darbaixa_dialog}" update=":formContasPagar:displayBaixa" />
+			            <p:commandButton action="#{contasPagarController.excluirContasAPagar}" value="#{msg.botao_excluir_dialog}" style="float:right;" icon="ui-icon-close" update="messageContasPagar" oncomplete="contasPagarDialog.hide(); #{contasPagarController.listaContasPagarDataModel}"/>  
+			        </h:panelGrid>  
+			    </p:dialog>
+			    
+			    <p:dialog id="dialogBaixa" closable="false" header="Baixa" widgetVar="baixaDialog" resizable="false"  
+	              			showEffect="explode" hideEffect="explode">  
+			        <h:panelGrid id="displayBaixa" columns="2" cellpadding="4">
+			        	<h:outputText value="Data Pagamento:" />  
+			            <p:calendar size="12" maxlength="10" showOn="button" onkeypress="formatar(this, '##/##/####');" binding="#{contasPagarController.dataPagamentoText}"/>
+			            
+						<h:outputText value="Parcelas a Pagar:" />  
+			            <p:inputText onkeypress="return numero(event);" size="4" binding="#{contasPagarController.nrParcelasText}"/>			            
+			        	
+			            <h:outputText value="Valor das Parcelas:" />  
+			            <p:inputText onkeyup="moeda(this);" size="15" binding="#{contasPagarController.valorParcelaText}"/>
+			  
+			            <h:outputText value="Total a Pagar:" />  
+			            <p:inputText onkeyup="moeda(this);" size="15" binding="#{contasPagarController.totalPagarText}" disabled="true"/>
+			    
+			    		<h:panelGroup>
+			            	<p:commandButton value="Concluir" action="#{contasPagarController.concluirBaixa}" update="messageConcluirContasPagar"/>
+			            	<p:growl id="messageConcluirContasPagar" showDetail="true" sticky="true" />
+			    		</h:panelGroup>
+						<p:commandButton value="Cancelar" style="float:right;" icon="ui-icon-close" onclick="contasPagarDialog.show();baixaDialog.hide();"/>			            			        
+			        </h:panelGrid>  
+	            </p:dialog> 
+			</p:panel>
+		</h:form>
+		</p:layoutUnit>
+    </ui:define>
+</ui:composition>

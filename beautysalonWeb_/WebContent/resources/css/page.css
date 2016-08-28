@@ -1,0 +1,32 @@
+body {
+	background-color:#1e1e1e;
+}
+
+.content {
+	background-image:url('../images/contentbg.png');
+	width:858px;
+	height:667px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.navbar {
+	margin-left:auto;
+	margin-right:auto;
+	width:760px;
+	text-align:center;
+}
+
+p.slogan {
+	margin-left:auto;
+	margin-right:auto;
+	width:760px;
+	text-align:center;
+	margin-top:10px;
+}
+
+.islogan {
+	background-image:url('../images/slogan.png');
+	width:743px; 
+	height:162px;
+}

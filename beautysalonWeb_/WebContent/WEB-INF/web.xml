@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>beautysalonWeb</display-name>
+  <servlet>
+    <servlet-name>Faces Servlet</servlet-name>
+    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>*.jsf</url-pattern>
+    <url-pattern>*.xhtml</url-pattern>
+  </servlet-mapping>
+  <context-param>
+    <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+    <param-value>server</param-value>
+  </context-param>
+  <context-param>
+    <param-name>primefaces.THEME</param-name>
+    <param-value>start</param-value>
+  </context-param>
+  <context-param>
+    <param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+    <param-value>.xhtml</param-value>
+  </context-param>
+  <context-param>
+    <param-name>com.sun.faces.allowTextChildren</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Perfil de Administradores</web-resource-name>
+      <url-pattern>/gerente/index.jsp</url-pattern>
+      <url-pattern>/gerente/index.jsf</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>gerente</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Perfil de Caixa</web-resource-name>
+      <url-pattern>/caixa/index.jsp</url-pattern>
+      <url-pattern>/caixa/index.jsf</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>caixa</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Perfil de Atendente</web-resource-name>
+      <url-pattern>/atendente/index.jsp</url-pattern>
+      <url-pattern>/atendente/index.jsf</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>atendente</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Perfil de Administracao</web-resource-name>
+      <url-pattern>/administracao/index.jsp</url-pattern>
+      <url-pattern>/administracao/index.jsf</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>administracao</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <login-config>
+    <auth-method>FORM</auth-method>
+    <form-login-config>
+      <form-login-page>/pages/login/login.xhtml</form-login-page>
+      <form-error-page>/pages/login/loginError.xhtml</form-error-page>
+    </form-login-config>
+  </login-config>
+  <security-role>
+    <role-name>gerente</role-name>
+  </security-role>
+  <security-role>
+    <role-name>caixa</role-name>
+  </security-role>
+  <security-role>
+    <role-name>atendente</role-name>
+  </security-role>
+  <security-role>
+    <role-name>administracao</role-name>
+  </security-role>
+  <error-page>
+    <error-code>403</error-code>
+    <location>/pages/login/loginError.xhtml</location>
+  </error-page>
+  <error-page>
+    <error-code>401</error-code>
+    <location>/pages/login/loginNaoAutorizado.xhtml</location>
+  </error-page>
+  <error-page>
+    <error-code>408</error-code>
+    <location>/pages/login/loginExcedido.xhtml</location>
+  </error-page>
+  <filter>
+    <filter-name>AccessFilter</filter-name>
+    <filter-class>br.com.beauty.filter.AccessFilter</filter-class>
+  </filter>
+  <filter>
+    <filter-name>LoginFilter</filter-name>
+    <filter-class>br.com.beauty.filter.LoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <url-pattern>/gerente/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <url-pattern>/administracao/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <url-pattern>/atendente/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <url-pattern>/caixa/*</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>AccessFilter</filter-name>
+    <url-pattern>/administracao/*</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>AccessFilter</filter-name>
+    <url-pattern>/atendente/*</url-pattern>
+  </filter-mapping>
+  
+  <filter-mapping>
+    <filter-name>AccessFilter</filter-name>
+    <url-pattern>/caixa/*</url-pattern>
+  </filter-mapping>
+  
+  <filter-mapping>
+    <filter-name>AccessFilter</filter-name>
+    <url-pattern>/pages/protected/*</url-pattern>
+  </filter-mapping>
+  
+</web-app>

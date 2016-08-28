@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"
+      template="/pages/protected/template/telaHome.xhtml">
+      
+    <ui:define name="header">
+         <ui:include src="/pages/protected/template/header/header.xhtml"/>
+    </ui:define>
+      
+	<ui:define name="corpo">
+		<p:layoutUnit position="center" header="#{msg.titulo_panel_saida_estoque}">
+			<h:form id="formSaidaEstoque">
+				<p:panel id="listasaidaestoque" styleClass="listasaidaestoque" style="float:center; width:840px;">
+					
+					<div align="center">
+						<p:dataTable id="tableSaidaEstoque" var="saidaEstoque" value="#{estoqueController.listaEstoqueDataModel}" rowKey="#{saidaEstoque.id}" emptyMessage="#{msg.mensagem_empty_lista}"
+									 paginator="true" selection="#{estoqueController.estoqueSelected}" selectionMode="single" tableStyle="width:auto;" rows="4">
+			                
+			                <p:ajax event="rowSelect" update=":formSaidaEstoque:display" oncomplete="saidaEstoqueDialog.show()"/>
+			                <p:ajax event="rowDblselect" listener="#{estoqueController.onRowDblselect}" />
+			                
+				   			<p:column sortBy="#{saidaEstoque.dataProcesso}" filterBy="#{saidaEstoque.dataProcesso}">
+		   			            <f:facet name="header">  
+					                <h:outputText value="Data" />  
+					            </f:facet>		   			  
+					        	<h:outputText value="#{saidaEstoque.dataProcesso}" />
+					        </p:column>		                
+			                
+				   			<p:column sortBy="#{saidaEstoque.tipoProcesso}" filterBy="#{saidaEstoque.tipoProcesso}">
+		   			            <f:facet name="header">  
+					                <h:outputText value="Tipo" />  
+					            </f:facet>		   			  
+					        	<h:outputText value="#{saidaEstoque.tipoProcesso}" />
+					        </p:column>		                
+			                
+				   			<p:column sortBy="#{saidaEstoque.quantidade}" filterBy="#{saidaEstoque.quantidade}">
+		   			            <f:facet name="header">  
+					                <h:outputText value="Quantidade" />  
+					            </f:facet>		   			  
+					        	<h:outputText value="#{saidaEstoque.quantidade}" />
+					        </p:column>		                
+			                
+				   			<p:column sortBy="#{saidaEstoque.valorUnitario}" filterBy="#{saidaEstoque.valorUnitario}">
+		   			            <f:facet name="header">  
+					                <h:outputText value="Valor Unitário" />  
+					            </f:facet>		   			  
+					        	<h:outputText value="#{saidaEstoque.valorUnitario}" />
+					        </p:column>		                
+			                
+				   			<p:column sortBy="#{saidaEstoque.valorTotalEstoque}" filterBy="#{saidaEstoque.valorTotalEstoque}">
+		   			            <f:facet name="header">  
+					                <h:outputText value="Valor Total" />  
+					            </f:facet>		   			  
+					        	<h:outputText value="#{saidaEstoque.valorTotalEstoque}" />
+					        </p:column>		                
+			                
+				   			<p:column sortBy="#{saidaEstoque.descricao}" filterBy="#{saidaEstoque.descricao}">
+		   			            <f:facet name="header">  
+					                <h:outputText value="Descrição" />  
+					            </f:facet>		   			  
+					        	<h:outputText value="#{saidaEstoque.descricao}" />
+					        </p:column>	
+					                         
+		                </p:dataTable>
+	                </div>
+	                
+		             <p:dialog id="dialogSaidaEstoque" header="Saída de Estoque" widgetVar="saidaEstoqueDialog" resizable="false"  
+		              			showEffect="explode" hideEffect="explode">  
+				  		<p:growl id="messageSaidaEstoque" showDetail="true" sticky="true" />
+				        <h:panelGrid id="display" columns="2" cellpadding="4">  
+				  
+				            <f:facet name="header">  
+				                <h:outputText value="Saída de Estoque" />  
+				            </f:facet>
+				            
+				            <p:inputText size="30" value="33" id="campoTexto"/>  
+				  
+				            <h:outputText value="Data Processo:" />  
+				            <p:inputText size="12" value="#{estoqueController.estoqueSelected.dataProcesso}" onkeypress="formatar(this, '##/##/####');"/> 
+				            
+		 					<h:outputText value="Produto:" />
+		 					<p:selectOneMenu id="produto" style="width:200px;" value="#{estoqueController.estoqueSelected.produtos.id}">
+					    		<f:selectItem itemLabel="Selecione.." itemValue=""/>
+								<f:selectItems value="#{estoqueController.listaProdutos}" var="produtos" itemLabel="#{produtos.nome}" itemValue="#{produtos.id}"/>
+								<p:ajax event="change" listener="#{estoqueController.atribuirValorUnitarioListener}" update="valorUnitario"/>
+					    	</p:selectOneMenu>					            
+				            
+				            <h:outputText value="Quantidade Saida:" />
+							<p:inputText size="5" onkeypress="return numero(event);" value="#{estoqueController.estoqueSelected.quantidade}"/>
+				  
+				            <h:outputText value="Valor Unitário:" />  
+				            <p:inputText id="valorUnitario" onkeyup="moeda(this);" size="10" maxlength="10" binding="#{estoqueController.textValorUnitario}" value="#{estoqueController.estoqueSelected.valorUnitario}" />
+				            
+				            <h:outputText value="Descrição:" />  
+				            <p:inputText id="descricao" size="35" maxlength="60" value="#{estoqueController.estoqueSelected.descricao}"/>  
+				  
+				            <p:commandButton action="#{estoqueController.alterarEstoque}" value="#{msg.botao_atualizar_dialog}" icon="ui-icon-arrowrefresh-1-w" oncomplete="saidaEstoqueDialog.hide(); #{estoqueController.listaEstoqueDataModel}"/>  
+				            <p:commandButton action="#{estoqueController.excluirEstoque}" value="#{msg.botao_excluir_dialog}" style="float:right;" icon="ui-icon-close" update="messageSaidaEstoque" oncomplete="saidaEstoqueDialog.hide(); #{estoqueController.listaEstoqueDataModel}"/>  
+				        </h:panelGrid>   
+				    </p:dialog> 
+				</p:panel>
+			</h:form>
+		</p:layoutUnit>
+    </ui:define>
+</ui:composition>

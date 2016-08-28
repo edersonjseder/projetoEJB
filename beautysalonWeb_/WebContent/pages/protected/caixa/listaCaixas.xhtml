@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"
+      template="/pages/protected/template/telaHome.xhtml">
+      
+    <ui:define name="header">
+         <ui:include src="/pages/protected/template/header/header.xhtml"/>
+    </ui:define>
+      
+	<ui:define name="corpo">
+		<p:layoutUnit position="center" header="Lista de Caixa">
+		<h:form id="formCaixa">
+			<p:panel id="listacaixas" styleClass="listaCaixas" style="float:center; width:950px;">
+				
+				<div align="center">
+					<p:dataTable id="tableCaixa" var="caixas" value="#{caixaController.listaCaixaDataModel}" rowKey="#{caixas.id}" emptyMessage="#{msg.mensagem_empty_lista}"
+								 paginator="true" selection="#{caixaController.caixaSelected}" selectionMode="single" tableStyle="width:auto;" rows="4">
+		                
+		                <p:ajax event="rowSelect" update=":formCaixa:display" oncomplete="caixaDialog.show()"/>
+		                <p:ajax event="rowDblselect" listener="#{caixaController.onRowDblselect}" />
+		                
+			   			<p:column sortBy="#{caixas.dataLancamento}" filterBy="#{caixas.dataLancamento}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Data" />  
+				            </f:facet>		   			  
+				        	<h:outputText value="#{caixas.dataLancamento}" />
+				        </p:column>		                
+		                
+			   			<p:column sortBy="#{caixas.historico}" filterBy="#{caixas.historico}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Histórico" />  
+				            </f:facet>
+				        	<h:outputText value="#{caixas.historico}" />   
+				        </p:column>
+				                         
+			   			<p:column sortBy="#{caixas.tipoLancamento}" filterBy="#{caixas.tipoLancamento}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Tipo" />  
+				            </f:facet>		   			  
+				        	<h:outputText value="#{caixas.tipoLancamento}" />
+				        </p:column>
+				                         
+			   			<p:column sortBy="#{caixas.especie}" filterBy="#{caixas.especie}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Espécie" />  
+				            </f:facet>		   			  
+				        	<h:outputText value="#{caixas.especie}" />
+				        </p:column>
+				                         
+			   			<p:column sortBy="#{caixas.descricao}" filterBy="#{caixas.descricao}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Descrição" />  
+				            </f:facet>		   			  
+				        	<h:outputText value="#{caixas.descricao}" />
+				        </p:column>
+				                         
+			   			<p:column sortBy="#{caixas.valor}" filterBy="#{caixas.valor}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Valor" />  
+				            </f:facet>		   			  
+				        	<h:outputText value="#{caixas.valor}" />
+				        </p:column>
+				                         
+	                </p:dataTable>
+                </div>
+                
+	             <p:dialog id="dialogCaixa" header="Caixa" widgetVar="caixaDialog" resizable="false"  
+	              			showEffect="explode" hideEffect="explode">  
+			  		<p:growl id="messageCaixa" showDetail="true" sticky="true" />
+			        <h:panelGrid id="display" columns="2" cellpadding="4">  
+			  
+			            <f:facet name="header">  
+			                <h:outputText value="Caixa" />  
+			            </f:facet>  
+			  
+			            <h:outputText value="Data:" />  
+			            <p:inputText size="12" value="#{caixaController.caixaSelected.dataLancamento}" onkeypress="formatar(this, '##/##/####');"/> 
+			            
+			            <h:outputText value="Histórico:" />
+						<p:selectOneMenu styleClass="historico" value="#{caixaController.caixaSelected.historico}">
+				    		<f:selectItem itemLabel="Venda a Vista - Clientes" itemValue="Venda a Vista - Clientes"/>
+				    		<f:selectItem itemLabel="Compra/Entrada de Produtos" itemValue="Compra/Entrada de Produtos"/>
+				    		<f:selectItem itemLabel="Pagto à Vista/Entrada/Dinheiro" itemValue="Pagto à Vista/Entrada/Dinheiro"/>
+				    		<f:selectItem itemLabel="Adiantamento de Salário" itemValue="Adiantamento de Salário"/>
+				    		<f:selectItem itemLabel="Salários a Pagar" itemValue="Salários a Pagar"/>
+				    		<f:selectItem itemLabel="Prestação de Serviços" itemValue="Prestação de Serviços"/>
+				    		<f:selectItem itemLabel="Pagamento do 13º Salário" itemValue="Pagamento do 13º Salário"/>
+				    		<f:selectItem itemLabel="Outras Despesas" itemValue="Outras Despesas"/>				    		
+				    	</p:selectOneMenu>	
+				    	
+				    	<h:outputText value="Descrição:" />  
+			            <p:inputText size="30" value="#{caixaController.caixaSelected.descricao}"/>					
+			            
+			            <h:outputText value="Tipo de Lançamento:" />
+				    	<p:selectOneMenu styleClass="tipo" value="#{caixaController.caixaSelected.tipoLancamento}">
+							<f:selectItem itemLabel="Entrada" itemValue="Entrada"/>
+							<f:selectItem itemLabel="Saída" itemValue="Saida"/>
+						</p:selectOneMenu>						
+			            
+			            <h:outputText value="Espécie:" />
+				    	<p:selectOneMenu styleClass="especie" value="#{caixaController.caixaSelected.especie}">
+				    		<f:selectItem itemLabel="Dinheiro" itemValue="Dinheiro"/>
+				    		<f:selectItem itemLabel="Cheque" itemValue="Cheque"/>
+						</p:selectOneMenu>						
+			  
+			            <h:outputText value="Valor:" />  
+			            <p:inputText onkeyup="moeda(this);" size="15" value="#{caixaController.caixaSelected.valor}" />  
+			  
+			            <p:commandButton action="#{caixaController.alterarCaixa}" value="#{msg.botao_atualizar_dialog}" icon="ui-icon-arrowrefresh-1-w" oncomplete="caixaDialog.hide(); #{caixaController.listaCaixaDataModel}"/>  
+			            <p:commandButton action="#{caixaController.excluirCaixa}" value="#{msg.botao_excluir_dialog}" style="float:right;" icon="ui-icon-close" update="messageCaixa" oncomplete="caixaDialog.hide(); #{caixaController.listaCaixaDataModel}"/>  
+			        </h:panelGrid>  
+			    </p:dialog> 
+			</p:panel>
+		</h:form>
+		</p:layoutUnit>
+    </ui:define>
+</ui:composition>

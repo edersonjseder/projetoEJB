@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core">
+      
+    <p:layoutUnit header="#{msg.titulo_panel_cadastro_produtos}" styleClass="fundo" position="center"> 
+		<h:form id="frmProduto" prependId="false">
+			<div align="center">
+				<p:panel id="cadastroprodutos" styleClass="cadastroprodutos" style="width:840px;">
+					<h:panelGrid id="grid" columns="2">
+						<h:outputText value="#{msg.label_nome_produto}" />
+						<p:inputText id="nomeProduto" size="30" value="#{produtoController.produto.nome}"/>
+						
+						<h:outputText value="#{msg.label_marca_produto}" />
+						<p:inputText id="marcaProduto" size="20" value="#{produtoController.produto.marca}"/>
+						
+						<h:outputText value="#{msg.label_categoria_produto}" />
+						<p:inputText id="categoriaProduto" value="#{produtoController.produto.categoria}" size="20"/>
+						
+						<h:outputText value="#{msg.label_preco_produto}" />
+						<p:inputText id="preco" size="10" onkeyup="moeda(this);" value="#{produtoController.preco}" maxlength="12"/>
+						
+						<h:outputText value="#{msg.label_descricao_produto}" />
+						<p:inputTextarea id="descricao" rows="5" cols="30" value="#{produtoController.produto.descricao}"/>
+						
+						<p:commandButton id="botaoCadastrarProduto" value="#{msg.botao_cadastro_produto}" action="#{produtoController.cadastrarProduto}" update="grid, messageProduto" icon="ui-icon-disk"/>
+						<p:growl id="messageProduto" showDetail="true" sticky="true" />
+					</h:panelGrid>
+				</p:panel>	
+			</div>
+		</h:form>
+	</p:layoutUnit>
+</ui:composition>

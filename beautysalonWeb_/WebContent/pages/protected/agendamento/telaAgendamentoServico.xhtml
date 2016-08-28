@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core">
+      
+    <p:layoutUnit header="#{msg.titulo_panel_agendamento_servicos}" styleClass="fundo" position="center"> 
+		<h:form id="frmAgendamento" prependId="false">
+			<div align="center">
+				<p:panel id="cadastroagendamentoservicos" styleClass="cadastroagendamentoservicos" style="width:840px;">
+					<h:panelGrid id="grid" columns="2">
+					
+						<h:outputText value="#{msg.label_data_agendamento_servico}" />
+						<p:calendar onkeypress="formatar(this, '##/##/####');" effect="slideDown" pattern="dd/MM/yyyy" size="12" id="dtAgendamentoServico" binding="#{agendamentoController.dataAtual}"/>
+						
+						<h:outputText value="#{msg.label_hora_agendamento_servico}" />
+						<p:inputText id="hrAgendamentoServico" size="8" onkeypress="formatar(this, '##:##');" binding="#{agendamentoController.horaAtual}"/>
+						
+						<h:outputText value="#{msg.label_nome_agendamento_servico}" />
+				    	<p:selectOneMenu id="servico" value="#{agendamentoController.agendamento.servicos.id}">
+				    		<f:selectItem itemLabel="Selecione.." itemValue=""/>
+				    		<f:selectItems value="#{agendamentoController.listaServico}" var="servicos" itemLabel="#{servicos.nome}" itemValue="#{servicos.id}"/>
+				    		<p:ajax event="change" listener="#{agendamentoController.atribuirValorServicoListener}" update="preco"/>
+				    	</p:selectOneMenu>
+						
+						<h:outputText value="#{msg.label_preco_agendamento_servico}" />
+						<p:inputText id="preco" size="12" onkeyup="moeda(this);" binding="#{agendamentoController.precoServicoText}" maxlength="10"/>
+						
+						<h:outputText value="#{msg.label_executor_agendamento_servico}" />
+				    	<p:selectOneMenu id="profissional" value="#{agendamentoController.agendamento.funcionarios.id}">
+				    		<f:selectItem itemLabel="Selecione.." itemValue="none"/>
+				    		<f:selectItems value="#{agendamentoController.listaFuncionarios}" var="funcionarios" itemLabel="#{funcionarios.nome}" itemValue="#{funcionarios.id}"/>
+				    	</p:selectOneMenu>
+						
+						<h:outputText value="#{msg.label_nome_cliente_agendamento_servico}" />
+				    	<p:selectOneMenu id="clientes" value="#{agendamentoController.agendamento.clientes.id}">
+				    		<f:selectItem itemLabel="Selecione.." itemValue=""/>
+				    		<f:selectItems value="#{agendamentoController.listaClientes}" var="clientes" itemLabel="#{clientes.nome}" itemValue="#{clientes.id}"/>
+				    	</p:selectOneMenu>						
+						
+						<h:outputText value="#{msg.label_descricao_agendamento_servico}" />
+						<p:inputTextarea id="descricao" rows="5" cols="40" value="#{agendamentoController.agendamento.descricao}"/>
+						
+						<h:outputText value="#{msg.label_status_agendamento_servico}" />
+				    	<p:selectOneMenu id="status" value="#{agendamentoController.agendamento.statusAgendamento}">
+				    		<f:selectItem itemLabel="Selecione.." itemValue=""/>
+				    		<f:selectItem itemLabel="Agendado" itemValue="Agendado"/>
+				    		<f:selectItem itemLabel="Aguardando" itemValue="Aguardando"/>
+				    		<f:selectItem itemLabel="Cancelado" itemValue="Cancelado"/>
+				    	</p:selectOneMenu>
+						
+						<p:commandButton id="botaoAgendarServico" value="#{msg.botao_cadastro_agendamento_servico}" action="#{agendamentoController.cadastrarAgendamento}" update="grid, messageAgendamento" icon="ui-icon-disk"/>
+						<p:growl id="messageAgendamento" showDetail="true" sticky="true" />
+					</h:panelGrid>
+				</p:panel>	
+			</div>
+		</h:form>	    
+    </p:layoutUnit>
+</ui:composition>

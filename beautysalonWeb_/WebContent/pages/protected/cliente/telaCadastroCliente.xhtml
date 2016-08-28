@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core">
+      
+    <p:layoutUnit header="#{msg.titulo_panel_cadastro_clientes}" position="center"> 
+		<h:form id="frmCliente" prependId="false">
+			<div align="center">
+				<p:panel id="cadastroclientes" styleClass="cadastroclientes" style="width:840px;">
+					<h:panelGrid id="grid" columns="2">
+						<h:outputText value="#{msg.label_nome_cliente}" />
+						<p:inputText id="nomeCliente" size="40" value="#{clienteController.cliente.nome}"/>
+						
+						<h:outputText value="#{msg.label_cpf}" />
+						<p:inputMask mask="999.999.999-99" id="cpf" size="15" onblur="consistenciaCPF(this.value);" value="#{clienteController.cliente.cpf}"/>
+						
+						<h:outputText value="#{msg.label_sexo}" />
+						<p:selectOneRadio id="sexo" value="#{clienteController.cliente.sexo}">
+							<f:selectItem itemLabel="Masculino" itemValue="M"/>
+							<f:selectItem itemLabel="Feminino" itemValue="F"/>
+						</p:selectOneRadio>
+								
+						<h:outputText value="#{msg.label_telefone_cliente}" />
+						<p:inputMask id="telefone" mask="(99) 9999-9999" size="15" value="#{clienteController.cliente.telefone}"/>
+						
+						<h:outputText value="#{msg.label_email_cliente}" />
+						<p:inputText id="email" size="40" onblur="validarEmail();" value="#{clienteController.cliente.email}"/>
+						
+						<h:outputText value="#{msg.label_endereco}" />
+				    	<p:inputText id="endereco" size="40" value="#{clienteController.cliente.endereco.endereco}"/>
+						
+						<h:outputText value="#{msg.label_bairro}" />
+						<p:inputText id="bairro" size="20" value="#{clienteController.cliente.endereco.bairro}"/>
+						
+						<h:outputText value="#{msg.label_estado}" />
+				    	<p:selectOneMenu id="estado" value="#{clienteController.idEstado}">
+				    		<f:selectItem itemLabel="Selecione..." itemValue=""/>
+							<f:selectItems value="#{clienteController.listaEstados}" var="estados" itemLabel="#{estados.nome}" itemValue="#{estados.id}"/>
+							<p:ajax event="change" listener="#{clienteController.pesquisarCidades}" update="cidade"/>
+				    	</p:selectOneMenu>
+						
+						<h:outputText value="#{msg.label_municipio}" />
+				    	<p:selectOneMenu id="cidade" value="#{clienteController.idCidade}" binding="#{clienteController.comboCidade}" disabled="true">
+				    		<f:selectItem itemLabel="Selecione..." itemValue=""/>
+				    		<f:selectItems value="#{clienteController.listaCidades}" var="cidades" itemLabel="#{cidades.nome}" itemValue="#{cidades.id}"/>
+				    	</p:selectOneMenu>
+						
+						<h:outputText value="#{msg.label_cep}" />
+						<p:inputMask mask="99999-999" required="true" id="cep" size="11" value="#{clienteController.cliente.endereco.cep}"/>
+											
+						<p:commandButton id="botaoCadastrarCliente" value="#{msg.botao_cadastro_cliente}" update="grid, messageCliente" icon="ui-icon-disk" action="#{clienteController.cadastrarClientes}"/>
+						<p:growl id="messageCliente" showDetail="true" sticky="true" />
+					</h:panelGrid>
+				</p:panel>	
+			</div>
+		</h:form>	    
+    </p:layoutUnit>
+</ui:composition>

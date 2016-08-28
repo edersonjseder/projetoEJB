@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"
+      template="/pages/protected/template/telaHome.xhtml">
+      
+    <ui:define name="header">
+         <ui:include src="/pages/protected/template/header/header.xhtml"/>
+    </ui:define>
+      
+	<ui:define name="corpo">
+		<p:layoutUnit position="center" header="Lista de Agendamentos">
+		<h:form id="formAgendamento">
+			<p:panel id="listaagendamentos" styleClass="listaagendamentos" style="float:center; width:840px;">
+				<div align="center">
+					<p:dataTable id="tableAgendamentos" var="agendamentos" value="#{agendamentoController.listaAgendamentosDataModel}" rowKey="#{agendamentos.id}" emptyMessage="#{msg.mensagem_empty_lista}" 
+								 paginator="true" selection="#{agendamentoController.agendamentoSelected}" selectionMode="single" tableStyle="width:auto;" rows="4">
+				        
+				        <p:ajax event="rowSelect" update=":formAgendamento:display" oncomplete="agendamentoDialog.show()"/>
+		                <p:ajax event="rowDblselect" listener="#{agendamentoController.onRowDblselect}" />
+				        
+			   			<p:column sortBy="#{agendamentos.dataAgendamento}" filterBy="#{agendamentos.dataAgendamento}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Data" />  
+				            </f:facet>
+				        	<h:outputText value="#{agendamentos.dataAgendamento}" />   
+				        </p:column>
+		                
+			   			<p:column sortBy="#{agendamentos.horaAgendamento}" filterBy="#{agendamentos.horaAgendamento}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Horário" />  
+				            </f:facet>
+				        	<h:outputText value="#{agendamentos.horaAgendamento}" />   
+				        </p:column>
+		                
+			   			<p:column sortBy="#{agendamentos.funcionarios.nome}" filterBy="#{agendamentos.funcionarios.nome}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Profissional" />  
+				            </f:facet>
+				        	<h:outputText value="#{agendamentos.funcionarios.nome}" />   
+				        </p:column>
+		                
+			   			<p:column sortBy="#{agendamentos.servicos.nome}" filterBy="#{agendamentos.servicos.nome}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Serviço" />  
+				            </f:facet>
+				        	<h:outputText value="#{agendamentos.servicos.nome}" />   
+				        </p:column>
+		                
+			   			<p:column sortBy="#{agendamentos.statusAgendamento}" filterBy="#{agendamentos.statusAgendamento}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Status" />  
+				            </f:facet>
+				        	<h:outputText value="#{agendamentos.statusAgendamento}" />   
+				        </p:column>
+		                
+					</p:dataTable>
+				</div>
+				
+	             <p:dialog id="dialogAgendamento" header="Agendamento" widgetVar="agendamentoDialog" resizable="false"  
+	              			showEffect="explode" hideEffect="explode">  
+			  		<p:growl id="messageAgendamento" showDetail="true" sticky="true" />
+			        <h:panelGrid id="display" columns="2" cellpadding="4">  
+			  
+			            <f:facet name="header">  
+			                <h:outputText value="Agendamento" />  
+			            </f:facet>  
+			  
+			            <h:outputText value="Data:" />  
+			            <p:inputText size="12" value="#{agendamentoController.agendamentoSelected.dataAgendamento}" onkeypress="formatar(this, '##/##/####');"/>  
+			  
+			            <h:outputText value="Hora:" />  
+			            <p:inputText onkeypress="formatar(this, '##:##');" size="8" maxlength="5" value="#{agendamentoController.agendamentoSelected.horaAgendamento}"/>  
+			            
+			            <h:outputText value="Serviço:" />
+				    	<p:selectOneMenu id="servico" value="#{agendamentoController.agendamentoSelected.servicos.id}">
+				    		<f:selectItem itemLabel="Selecione.." itemValue=""/>
+				    		<f:selectItems value="#{agendamentoController.listaServico}" var="servicos" itemLabel="#{servicos.nome}" itemValue="#{servicos.id}"/>
+				    	</p:selectOneMenu>
+				    	
+				    	<h:outputText value="Cliente:" />
+				    	<p:selectOneMenu id="cliente" value="#{agendamentoController.agendamentoSelected.clientes.id}">
+				    		<f:selectItem itemLabel="Selecione.." itemValue=""/>
+				    		<f:selectItems value="#{agendamentoController.listaClientes}" var="clientes" itemLabel="#{clientes.nome}" itemValue="#{clientes.id}"/>
+				    	</p:selectOneMenu>	
+				    	
+				    	<h:outputText value="Profissional:" />
+				    	<p:selectOneMenu id="profissional" value="#{agendamentoController.agendamentoSelected.funcionarios.id}">
+				    		<f:selectItem itemLabel="Selecione o Profissional" itemValue="none"/>
+				    		<f:selectItems value="#{agendamentoController.listaFuncionarios}" var="funcionarios" itemLabel="#{funcionarios.nome}" itemValue="#{funcionarios.id}"/>
+				    	</p:selectOneMenu>				    				    	
+						
+						<h:outputText value="Descrição:" />
+						<p:inputTextarea id="descricao" rows="5" cols="40" value="#{agendamentoController.agendamentoSelected.descricao}"/>
+						
+						<h:outputText value="Status:" />
+				    	<p:selectOneMenu id="status" value="#{agendamentoController.agendamentoSelected.statusAgendamento}">
+				    		<f:selectItem itemLabel="Agendado" itemValue="Agendado"/>
+				    		<f:selectItem itemLabel="Aguardando" itemValue="Aguardando"/>
+				    		<f:selectItem itemLabel="Cancelado" itemValue="Cancelado"/>
+				    	</p:selectOneMenu> 
+			  
+			            <p:commandButton action="#{agendamentoController.alterarAgendamento}" value="#{msg.botao_atualizar_dialog}" icon="ui-icon-arrowrefresh-1-w" oncomplete="agendamentoDialog.hide(); #{agendamentoController.listaAgendamentosDataModel}"/>  
+			            <p:commandButton action="#{agendamentoController.excluirAgendamento}" value="#{msg.botao_excluir_dialog}" style="float:right;" icon="ui-icon-close" update="messageAgendamento" oncomplete="agendamentoDialog.hide(); #{agendamentoController.listaAgendamentosDataModel}"/>  
+			        </h:panelGrid>  
+			    </p:dialog>				
+			</p:panel>
+		</h:form>
+		</p:layoutUnit>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,289 @@
+@CHARSET "ISO-8859-1";
+
+body {
+	background-image: url("../images/Hair_Salon.jpg");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-color: #253F65;
+}
+
+.fundo {
+	background-color: #253F65;	
+}
+
+.oBody{
+	background-color: #253F65;	
+}
+
+#lista {
+	background-image: url("../images/Hair_Salon.jpg");
+	background-repeat: no-repeat;
+	background-attachment: fixed;	
+}
+
+#painel {
+	margin: 0 auto;
+	text-align: center;
+	vertical-align: middle;
+}
+
+#msgErro {
+	font-family: Arial;
+	font-size: 18px;
+	color: #CE0B0B;
+	text-align: center;
+}
+
+/* Tela de Cadastro de Clientes */
+#cadastroclientes {
+	margin: 0 auto;
+	text-align: center;
+	vertical-align: middle;
+}
+
+/* Tela de Cadastro de Funcionários */
+#cadastrofuncionarios {
+	margin: 0 auto;
+	vertical-align: middle;
+}
+
+/* Tela de Lista de Funcionários */
+#listafuncionarios {
+	margin: 0 auto;
+	text-align: center;
+	vertical-align: middle;
+	background-image: url("../images/Hair_Salon.jpg");
+	background-repeat: no-repeat;
+	background-attachment: fixed;	
+}
+
+#botaoCadastroEndereco {
+	font-weight: bold; /* foont em negrito */
+	font-family: Arial;
+	font-size: 18px;
+	font-variant: small-caps;
+	border: 1px solid #F8F8FF; /* Borda com 1px de espessura e cor em hexedecimal */
+	text-decoration: none; /* Retira o sublinhado do link */
+	display: block; /* Para que fique do tamanho determinado */
+	width: 120px; /* Largura */
+	color: #FFFFFF; /* Cor do texto - branco */
+	background-color: #CE0B0B; /* Cor do fundo - vermelho*/
+	behavior: url(border-radius.htc);/* arquivo para as bordas arredondadas funcionar no IE */
+	border-radius: 5px; /* bordas arredondadas */
+	-moz-border-radius: 5px; /* bordas arredondadas */
+	-webkit-border-radius: 5px; /* bordas arredondadas */
+	float: right;	
+}
+
+/* Quando passar o mouse sobre*/
+#botaoCadastroEndereco:hover{ /* Hover ação do mouse */
+	color: #FFFFCC; /* Muda a cor do texto p/ branco */
+	background: #990000; /* Muda a cor do fundo para Vermelho escuro*/
+	border: 1px solid #990000; /* Muda a cor da borda para Vermelho escuro*/
+}
+/* Tela de Cadastro de Clientes */
+
+
+/* Tela de Cadastro de Contas */
+#conta {
+	width: 150px;
+}
+/* Tela de Cadastro de Contas */
+
+#botaoLogar{ /* A classe botao */
+font-weight: bold; /* foont em negrito */
+font-family: Arial;
+font-size: 18px;
+font-variant: small-caps;
+border: 1px solid #F8F8FF; /* Borda com 1px de espessura e cor em hexedecimal */
+text-decoration: none; /* Retira o sublinhado do link */
+display: block; /* Para que fique do tamanho determinado */
+width: 120px; /* Largura */
+color: #FFFFFF; /* Cor do texto - branco */
+background-color: #4297D7; /* Cor do fundo - vermelho*/
+behavior: url(border-radius.htc);/* arquivo para as bordas arredondadas funcionar no IE */
+border-radius: 5px; /* bordas arredondadas */
+-moz-border-radius: 5px; /* bordas arredondadas */
+-webkit-border-radius: 5px; /* bordas arredondadas */
+float: right;
+}
+
+/* Quando passar o mouse sobre*/
+#botaoLogar:hover{ /* Hover ação do mouse */
+color: #FFFFCC; /* Muda a cor do texto p/ branco */
+background: #4297D7; /* Muda a cor do fundo para Vermelho escuro*/
+border: 1px solid #4297D7; /* Muda a cor da borda para Vermelho escuro*/
+}
+
+/** Botões **/
+#botaoMenuCliente{ /* A classe botao */
+font-weight: bold; /* foont em negrito */
+font-family: Arial;
+font-size: 18px;
+font-variant: small-caps;
+border: 1px solid #F8F8FF; /* Borda com 1px de espessura e cor em hexedecimal */
+text-decoration: none; /* Retira o sublinhado do link */
+display: block; /* Para que fique do tamanho determinado */
+width: 120px; /* Largura */
+color: #FFFFFF; /* Cor do texto - branco */
+background-color: #CE0B0B; /* Cor do fundo - vermelho*/
+behavior: url(border-radius.htc);/* arquivo para as bordas arredondadas funcionar no IE */
+border-radius: 5px; /* bordas arredondadas */
+-moz-border-radius: 5px; /* bordas arredondadas */
+-webkit-border-radius: 5px; /* bordas arredondadas */
+float: right;
+}
+
+/* Quando passar o mouse sobre*/
+#botaoMenuCliente:hover{ /* Hover ação do mouse */
+color: #FFFFCC; /* Muda a cor do texto p/ branco */
+background: #990000; /* Muda a cor do fundo para Vermelho escuro*/
+border: 1px solid #990000; /* Muda a cor da borda para Vermelho escuro*/
+}
+
+#botaoMenuFuncionario{ /* A classe botao */
+font-weight: bold; /* foont em negrito */
+font-family: Arial;
+font-size: 18px;
+font-variant: small-caps;
+border: 1px solid #F8F8FF; /* Borda com 1px de espessura e cor em hexedecimal */
+text-decoration: none; /* Retira o sublinhado do link */
+display: block; /* Para que fique do tamanho determinado */
+width: 120px; /* Largura */
+color: #FFFFFF; /* Cor do texto - branco */
+background-color: #CE0B0B; /* Cor do fundo - vermelho*/
+behavior: url(border-radius.htc);/* arquivo para as bordas arredondadas funcionar no IE */
+border-radius: 5px; /* bordas arredondadas */
+-moz-border-radius: 5px; /* bordas arredondadas */
+-webkit-border-radius: 5px; /* bordas arredondadas */
+float: right;
+}
+
+/* Quando passar o mouse sobre*/
+#botaoMenuFuncionario:hover{ /* Hover ação do mouse */
+color: #FFFFCC; /* Muda a cor do texto p/ branco */
+background: #990000; /* Muda a cor do fundo para Vermelho escuro*/
+border: 1px solid #990000; /* Muda a cor da borda para Vermelho escuro*/
+}
+
+
+#botaoMenuAtendimento{ /* A classe botao */
+font-weight: bold; /* foont em negrito */
+font-family: Arial;
+font-size: 18px;
+font-variant: small-caps;
+border: 1px solid #F8F8FF; /* Borda com 1px de espessura e cor em hexedecimal */
+text-decoration: none; /* Retira o sublinhado do link */
+display: block; /* Para que fique do tamanho determinado */
+width: 120px; /* Largura */
+color: #FFFFFF; /* Cor do texto - branco */
+background-color: #CE0B0B; /* Cor do fundo - vermelho*/
+behavior: url(border-radius.htc);/* arquivo para as bordas arredondadas funcionar no IE */
+border-radius: 5px; /* bordas arredondadas */
+-moz-border-radius: 5px; /* bordas arredondadas */
+-webkit-border-radius: 5px; /* bordas arredondadas */
+float: right;
+}
+
+/* Quando passar o mouse sobre*/
+#botaoMenuAtendimento:hover{ /* Hover ação do mouse */
+color: #FFFFCC; /* Muda a cor do texto p/ branco */
+background: #990000; /* Muda a cor do fundo para Vermelho escuro*/
+border: 1px solid #990000; /* Muda a cor da borda para Vermelho escuro*/
+}
+
+
+#botaoMenuAgendamento{ /* A classe botao */
+font-weight: bold; /* foont em negrito */
+font-family: Arial;
+font-size: 18px;
+font-variant: small-caps;
+border: 1px solid #F8F8FF; /* Borda com 1px de espessura e cor em hexedecimal */
+text-decoration: none; /* Retira o sublinhado do link */
+display: block; /* Para que fique do tamanho determinado */
+width: 120px; /* Largura */
+color: #FFFFFF; /* Cor do texto - branco */
+background-color: #CE0B0B; /* Cor do fundo - vermelho*/
+behavior: url(border-radius.htc);/* arquivo para as bordas arredondadas funcionar no IE */
+border-radius: 5px; /* bordas arredondadas */
+-moz-border-radius: 5px; /* bordas arredondadas */
+-webkit-border-radius: 5px; /* bordas arredondadas */
+float: right;
+}
+
+/* Quando passar o mouse sobre*/
+#botaoMenuAgendamento:hover{ /* Hover ação do mouse */
+color: #FFFFCC; /* Muda a cor do texto p/ branco */
+background: #990000; /* Muda a cor do fundo para Vermelho escuro*/
+border: 1px solid #990000; /* Muda a cor da borda para Vermelho escuro*/
+}
+
+
+#botaoMenuProduto{ /* A classe botao */
+font-weight: bold; /* foont em negrito */
+font-family: Arial;
+font-size: 18px;
+font-variant: small-caps;
+border: 1px solid #F8F8FF; /* Borda com 1px de espessura e cor em hexedecimal */
+text-decoration: none; /* Retira o sublinhado do link */
+display: block; /* Para que fique do tamanho determinado */
+width: 120px; /* Largura */
+color: #FFFFFF; /* Cor do texto - branco */
+background-color: #CE0B0B; /* Cor do fundo - vermelho*/
+behavior: url(border-radius.htc);/* arquivo para as bordas arredondadas funcionar no IE */
+border-radius: 5px; /* bordas arredondadas */
+-moz-border-radius: 5px; /* bordas arredondadas */
+-webkit-border-radius: 5px; /* bordas arredondadas */
+float: right;
+}
+
+/* Quando passar o mouse sobre*/
+#botaoMenuProduto:hover{ /* Hover ação do mouse */
+color: #FFFFCC; /* Muda a cor do texto p/ branco */
+background: #990000; /* Muda a cor do fundo para Vermelho escuro*/
+border: 1px solid #990000; /* Muda a cor da borda para Vermelho escuro*/
+}
+
+
+#botaoMenuServicos{ /* A classe botao */
+font-weight: bold; /* foont em negrito */
+font-family: Arial;
+font-size: 18px;
+font-variant: small-caps;
+border: 1px solid #F8F8FF; /* Borda com 1px de espessura e cor em hexedecimal */
+text-decoration: none; /* Retira o sublinhado do link */
+display: block; /* Para que fique do tamanho determinado */
+width: 120px; /* Largura */
+color: #FFFFFF; /* Cor do texto - branco */
+background-color: #CE0B0B; /* Cor do fundo - vermelho*/
+behavior: url(border-radius.htc);/* arquivo para as bordas arredondadas funcionar no IE */
+border-radius: 5px; /* bordas arredondadas */
+-moz-border-radius: 5px; /* bordas arredondadas */
+-webkit-border-radius: 5px; /* bordas arredondadas */
+float: right;
+}
+
+/* Quando passar o mouse sobre*/
+#botaoMenuServicos:hover{ /* Hover ação do mouse */
+color: #FFFFCC; /* Muda a cor do texto p/ branco */
+background: #990000; /* Muda a cor do fundo para Vermelho escuro*/
+border: 1px solid #990000; /* Muda a cor da borda para Vermelho escuro*/
+}
+
+
+.botaoEstilo{ /* A classe botao */
+font-weight: bold; /* foont em negrito */
+font-family: Arial;
+font-size: 18px;
+font-variant: small-caps;
+border: 1px solid #F8F8FF; /* Borda com 1px de espessura e cor em hexedecimal */
+text-decoration: none; /* Retira o sublinhado do link */
+display: block; /* Para que fique do tamanho determinado */
+width: 120px; /* Largura */
+color: #FFFFFF; /* Cor do texto - branco */
+background-color: #CE0B0B; /* Cor do fundo - vermelho*/
+behavior: url(border-radius.htc);/* arquivo para as bordas arredondadas funcionar no IE */
+border-radius: 5px; /* bordas arredondadas */
+-moz-border-radius: 5px; /* bordas arredondadas */
+-webkit-border-radius: 5px; /* bordas arredondadas */
+}

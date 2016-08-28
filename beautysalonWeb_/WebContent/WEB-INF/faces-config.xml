@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+    version="2.0">
+    
+    <!-- lifecycle>
+		<phase-listener>br.com.beauty.utils.ControleAcessoListener</phase-listener>
+	</lifecycle -->
+
+	<navigation-rule>
+		<from-view-id>/*</from-view-id>
+		<navigation-case>
+			<from-outcome>loginPagina</from-outcome>
+			<to-view-id>/pages/login/login.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/users/administracao/homePage.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>administracao</from-outcome>
+			<to-view-id>/pages/users/administracao/homePage.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/users/atendente/homePage.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>atendente</from-outcome>
+			<to-view-id>/pages/users/atendente/homePage.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/users/caixa/homePage.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>caixa</from-outcome>
+			<to-view-id>/pages/users/caixa/homePage.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/pages/expired/sessionExpired.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>gerente</from-outcome>
+			<to-view-id>/pages/users/gerente/homePage.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+</faces-config>

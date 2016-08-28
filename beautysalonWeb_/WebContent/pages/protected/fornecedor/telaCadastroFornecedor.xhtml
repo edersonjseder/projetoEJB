@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core">
+
+	<p:layoutUnit header="#{msg.titulo_panel_cadastro_fornecedor}" position="center">  
+        <h:form id="frmForn" prependId="false">
+        	<div align="center">
+				<p:panel id="cadastrofornecedor" styleClass="cadastrofornecedor" style="width:840px;">
+					<h:panelGrid id="grid" columns="2">
+						
+						<h:outputText value="#{msg.label_data_cadastro_fornecedor}" />
+						<p:calendar locale="pt" showButtonPanel="true" onkeypress="formatar(this, '##/##/####');" effect="slideDown" pattern="dd/MM/yyyy" size="11" navigator="true" id="dtCadastroFornecedor" binding="#{fornecedorController.dataAtual}"/>
+						
+						<h:outputText value="#{msg.label_nome_fornecedor}" />
+						<p:inputText id="nomeFornecedor" size="40" value="#{fornecedorController.fornecedor.nomeFornecedor}" />
+						
+						<h:outputText value="#{msg.label_cpfcnpj_fornecedor}" />
+						<p:inputText id="cpf_cnpj" onblur="consistenciaCPF(this.value);" onKeyPress="return digitos(event, this);" onKeyUp="Mascara(this,event);" size="18" value="#{fornecedorController.fornecedor.cpfOuCnpj}"/>
+						
+						<h:outputText value="#{msg.label_telefone_fornecedor}" />
+						<p:inputMask id="telefone" mask="(99) 9999-9999" size="16" value="#{fornecedorController.fornecedor.telefone}"/>
+						
+						<h:outputText value="#{msg.label_email_fornecedor}" />
+						<p:inputText id="email" size="40" onblur="validarEmail();" value="#{fornecedorController.fornecedor.email}"/>
+						
+						<h:outputText value="#{msg.label_endereco_fornecedor}" />
+				    	<p:inputText id="endereco" size="40" value="#{fornecedorController.fornecedor.endereco.endereco}"/>
+
+						<h:outputText value="#{msg.label_bairro_fornecedor}" />
+						<p:inputText id="bairro" size="30" value="#{fornecedorController.fornecedor.endereco.bairro}"/>
+						
+						<h:outputText value="#{msg.label_estado_fornecedor}" />
+				    	<p:selectOneMenu id="estado" value="#{fornecedorController.idEstado}">
+				    		<f:selectItem itemLabel="Selecione..." itemValue=""/>
+							<f:selectItems value="#{fornecedorController.listaEstados}" var="estados" itemLabel="#{estados.nome}" itemValue="#{estados.id}"/>
+							<p:ajax event="change" listener="#{fornecedorController.pesquisarCidades}" update="cidade"/>
+				    	</p:selectOneMenu>
+						
+						<h:outputText value="#{msg.label_municipio_fornecedor}" />
+				    	<p:selectOneMenu id="cidade" value="#{fornecedorController.idCidade}" binding="#{fornecedorController.comboCidade}" disabled="true">
+				    		<f:selectItem itemLabel="Selecione..." itemValue=""/>
+				    		<f:selectItems value="#{fornecedorController.listaCidades}" var="cidades" itemLabel="#{cidades.nome}" itemValue="#{cidades.id}"/>
+				    	</p:selectOneMenu>				    	
+
+						<h:outputText value="#{msg.label_cep_fornecedor}" />
+						<p:inputMask mask="99999-999" id="cep" size="11" value="#{fornecedorController.fornecedor.endereco.cep}"/>
+						
+						<p:commandButton id="botaoCadastrarFornecedor" value="#{msg.botao_cadastro_fornecedor}" action="#{fornecedorController.cadastrarFornecedor}" update="grid, messageFornecedor" icon="ui-icon-disk"/>
+						<p:growl id="messageFornecedor" showDetail="true" sticky="true" />
+					</h:panelGrid>
+				</p:panel>
+			</div>	
+        </h:form>  
+    </p:layoutUnit>
+</ui:composition>

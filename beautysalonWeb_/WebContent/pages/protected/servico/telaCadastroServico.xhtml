@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core">
+      
+    <p:layoutUnit header="#{msg.titulo_panel_cadastro_servicos}" styleClass="fundo" position="center"> 
+		<h:form id="frmServico" prependId="false">
+			<div align="center">
+				<p:panel id="cadastroservicos" styleClass="cadastroservicos" style="width:840px;">
+					<h:panelGrid id="grid" columns="2">
+						<h:outputText value="#{msg.label_nome_data}" />
+						<p:calendar onkeypress="formatar(this, '##/##/####');" effect="slideDown" pattern="dd/MM/yyyy" binding="#{servicoController.dataAtual}" size="14" id="dataServico"/>
+						
+						<h:outputText value="#{msg.label_nome_servico}" />
+						<p:inputText id="nomeServico" size="30" required="true" value="#{servicoController.servico.nome}"/>
+						
+						<h:outputText value="#{msg.label_descricao_servico}" />
+						<p:inputTextarea id="descricao" value="#{servicoController.servico.descricao}" rows="5" cols="30"/>
+						
+						<h:outputText value="#{msg.label_preco_servico}" />
+						<p:inputText id="preco" size="12" onkeyup="moeda(this);" value="#{servicoController.preco}"/>
+						
+						<p:commandButton id="botaoCadastrarServico" value="#{msg.botao_cadastro_servico}" action="#{servicoController.cadastrarServico}" update="grid, messageServico" icon="ui-icon-disk"/>
+						<p:growl id="messageServico" showDetail="true" sticky="true" />
+					</h:panelGrid>
+				</p:panel>	
+			</div>
+		</h:form>
+	</p:layoutUnit>
+</ui:composition>

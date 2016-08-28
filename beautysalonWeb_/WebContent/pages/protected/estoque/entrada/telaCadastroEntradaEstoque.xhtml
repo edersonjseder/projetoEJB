@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	 xmlns:p="http://primefaces.org/ui"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets">
+ 	
+ 	<p:layoutUnit header="#{msg.titulo_panel_entrada_estoque}" position="center">
+ 		<h:form id="frmEntradaEstoque" prependId="false">
+ 			<div align="center">
+	 			<p:panel id="cadastroentradaestoque" styleClass="cadastroentradaestoque" style="width:840px;">
+	 				<h:panelGrid id="grid" columns="2" border="0">
+	 					<h:outputText value="#{msg.label_entrada_estoque_data}" />
+						<p:calendar onkeypress="formatar(this, '##/##/####');" effect="slideDown" pattern="dd/MM/yyyy" binding="#{estoqueController.dataAtual}" size="14" id="dataEntrada"/>
+						
+	 					<h:outputText value="#{msg.label_entrada_estoque_tipo_processo}" />
+	 					<p:inputText id="tipoProcesso" size="10" maxlength="10" binding="#{estoqueController.textEntrada}" disabled="true"/>
+	 					
+	 					<h:outputText value="#{msg.label_entrada_estoque_produtos}" />
+	 					<p:selectOneMenu id="produto" style="width:200px;" value="#{estoqueController.estoque.produtos.id}">
+				    		<f:selectItem itemLabel="Selecione.." itemValue=""/>
+							<f:selectItems value="#{estoqueController.listaProdutos}" var="produtos" itemLabel="#{produtos.nome}" itemValue="#{produtos.id}"/>
+							<p:ajax event="change" listener="#{estoqueController.atribuirValorUnitarioListener}" update="valorUnitario"/>
+				    	</p:selectOneMenu>
+	 					
+	 					<h:outputText value="#{msg.label_entrada_estoque_qtde}" />
+	 					<p:inputText id="qtdeEntrada" size="5" maxlength="5" onkeypress="return numero(event);" value="#{estoqueController.estoque.quantidade}"/>
+						
+	 					<h:outputText value="#{msg.label_entrada_estoque_valor_unitario}" />
+	 					<p:inputText id="valorUnitario" onblur="calcularValorEntrada(this);" onkeyup="moeda(this);" size="10" maxlength="10" binding="#{estoqueController.textValorUnitario}"/>
+						
+	 					<h:outputText value="#{msg.label_entrada_estoque_descricao}" />
+	 					<p:inputText id="descricao" size="30" maxlength="60" value="#{estoqueController.estoque.descricao}"/>
+						
+	 					<h:outputText value="#{msg.label_entrada_estoque_valor_total}" />
+	 					<p:inputText id="valorTotal" disabled="true" onkeyup="moeda(this);" size="10" maxlength="10"/>
+	 					
+						<p:commandButton id="botaoCadastrarEntradaEstoque" value="#{msg.botao_cadastro_entrada_estoque}" update="grid, messageEntradaEstoque" icon="ui-icon-disk" action="#{estoqueController.cadastrarEstoqueEntrada}"/>
+						<p:growl id="messageEntradaEstoque" showDetail="true" sticky="true" />				    					    					    																	
+	 				</h:panelGrid>
+	 			</p:panel>
+ 			</div>
+ 		</h:form>
+ 	</p:layoutUnit>	    
+</ui:composition>

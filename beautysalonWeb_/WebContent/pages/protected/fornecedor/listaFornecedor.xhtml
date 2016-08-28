@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"
+      template="/pages/protected/template/telaHome.xhtml">
+      
+    <ui:define name="header">
+         <ui:include src="/pages/protected/template/header/header.xhtml"/>
+    </ui:define>
+      
+	<ui:define name="corpo">
+		<p:layoutUnit position="center" header="Lista de Fornecedores">
+		<h:form id="formFornecedor">
+			<p:panel id="listafornecedores" styleClass="listafornecedores" style="float:center; width:840px;">
+				<div align="center">
+					<p:dataTable id="tableFornecedor" var="fornecedores" value="#{fornecedorController.listaFornecedoresDataModel}" rowKey="#{fornecedores.id}" emptyMessage="#{msg.mensagem_empty_lista}" 
+								 paginator="true" selection="#{fornecedorController.fornecedorSelected}" selectionMode="single" tableStyle="width:auto;" rows="4">
+				        
+				        <p:ajax event="rowSelect" update=":formFornecedor:display" oncomplete="fornecedorDialog.show()"/>
+		                <p:ajax event="rowDblselect" listener="#{funcionarioController.onRowDblselect}" />
+				        
+			   			<p:column sortBy="#{fornecedores.nomeFornecedor}" filterBy="#{fornecedores.nomeFornecedor}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Fornecedor" />  
+				            </f:facet>
+				        	<h:outputText value="#{fornecedores.nomeFornecedor}" />   
+				        </p:column>
+		                
+			   			<p:column sortBy="#{fornecedores.cpfOuCnpj}" filterBy="#{fornecedores.cpfOuCnpj}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="CPF/CNPJ" />  
+				            </f:facet>
+				        	<h:outputText value="#{fornecedores.cpfOuCnpj}" />   
+				        </p:column>
+		                
+			   			<p:column sortBy="#{fornecedores.dataCadastro}" filterBy="#{fornecedores.dataCadastro}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Data de Cadastro" />  
+				            </f:facet>
+				        	<h:outputText value="#{fornecedores.dataCadastro}" />   
+				        </p:column>
+		                
+			   			<p:column sortBy="#{fornecedores.telefone}" filterBy="#{fornecedores.telefone}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Telefone" />  
+				            </f:facet>
+				        	<h:outputText value="#{fornecedores.telefone}" />   
+				        </p:column>
+		                
+			   			<p:column sortBy="#{fornecedores.email}" filterBy="#{fornecedores.email}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Email" />  
+				            </f:facet>
+				        	<h:outputText value="#{fornecedores.email}" />   
+				        </p:column>
+		       			        
+					</p:dataTable>
+				</div>
+				
+	             <p:dialog id="dialogFornecedor" header="Fornecedor" widgetVar="fornecedorDialog" resizable="false"  
+	              			showEffect="explode" hideEffect="explode">  
+			  		<p:growl id="messageFornecedor" showDetail="true" sticky="true" />
+			        <h:panelGrid id="display" columns="2" cellpadding="4">  
+			  
+			            <f:facet name="header">  
+			                <h:outputText value="Fornecedor" />  
+			            </f:facet>  
+			  
+			            <h:outputText value="Nome:" />  
+			            <p:inputText size="40" value="#{fornecedorController.fornecedorSelected.nomeFornecedor}" />  
+			  
+			            <h:outputText value="CPF/CNPJ:" />  
+			            <p:inputText onblur="consistenciaCPF(this.value);" onKeyPress="return digitos(event, this);" onKeyUp="Mascara(this,event);" size="18" value="#{fornecedorController.fornecedorSelected.cpfOuCnpj}"/>  
+			            
+			            <h:outputText value="Telefone:" />  
+			            <p:inputMask mask="(99) 9999-9999" size="16" value="#{fornecedorController.fornecedorSelected.telefone}"/>  
+			  
+			            <h:outputText value="Email:" />  
+			            <p:inputText size="40" onblur="validarEmail();" value="#{fornecedorController.fornecedorSelected.email}"/>
+			            
+						<h:outputText value="Endereço:" />
+				    	<p:inputText size="40" value="#{fornecedorController.fornecedorSelected.endereco.endereco}"/>
+						
+						<h:outputText value="Endereço:" />
+						<p:inputText size="30" value="#{fornecedorController.fornecedorSelected.endereco.bairro}"/>
+						
+						<h:outputText value="Estado:" />
+				    	<p:selectOneMenu value="#{fornecedorController.fornecedorSelected.endereco.estado.id}">
+				    		<f:selectItem itemLabel="Selecione..." itemValue=""/>
+							<f:selectItems value="#{fornecedorController.listaEstados}" var="estados" itemLabel="#{estados.nome}" itemValue="#{estados.id}"/>
+							<p:ajax event="change" listener="#{fornecedorController.pesquisarCidadesAlteracao}" update="cidade"/>
+				    	</p:selectOneMenu>
+						
+						<h:outputText value="Cidade:" />
+				    	<p:selectOneMenu id="cidade" value="#{fornecedorController.fornecedorSelected.endereco.cidade.id}" binding="#{fornecedorController.comboCidade}" disabled="false">
+				    		<f:selectItem itemLabel="Selecione..." itemValue=""/>
+				    		<f:selectItems value="#{fornecedorController.listaCidades}" var="cidades" itemLabel="#{cidades.nome}" itemValue="#{cidades.id}"/>
+				    	</p:selectOneMenu>				    	
+
+						<h:outputText value="CEP:" />
+						<p:inputMask mask="99999-999" size="11" value="#{fornecedorController.fornecedorSelected.endereco.cep}"/>			              
+			  
+			            <p:commandButton action="#{fornecedorController.alterarFornecedor}" value="#{msg.botao_atualizar_dialog}" icon="ui-icon-arrowrefresh-1-w" oncomplete="fornecedorDialog.hide(); #{fornecedorController.listaFornecedoresDataModel}"/>  
+			            <p:commandButton action="#{fornecedorController.excluirFornecedor}" value="#{msg.botao_excluir_dialog}" style="float:right;" icon="ui-icon-close" update="messageFornecedor" oncomplete="fornecedorDialog.hide(); #{fornecedorController.listaFornecedoresDataModel}"/>  
+			        </h:panelGrid>  
+			    </p:dialog>				
+			</p:panel>
+		</h:form>
+		</p:layoutUnit>
+    </ui:define>
+</ui:composition>

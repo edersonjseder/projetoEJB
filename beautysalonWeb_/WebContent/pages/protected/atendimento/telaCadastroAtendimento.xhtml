@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core">
+      
+    <p:layoutUnit header="#{msg.titulo_panel_atendimento_servicos}" styleClass="fundo" position="center"> 
+		<h:form id="frmAgendamento" prependId="false">
+			<div align="center">
+				<p:panel id="cadastroatendimentoservicos" styleClass="cadastroatendimentoservicos" style="width:840px;">
+					<h:panelGrid id="grid" columns="2">
+					
+						<h:outputText value="#{msg.label_data_atendimento_servico}" />
+						<p:calendar onkeypress="formatar(this, '##/##/####');" effect="slideDown" pattern="dd/MM/yyyy" size="12" disabled="true" id="dtAgendamentoServico" binding="#{agendamentoController.dataAtual}"/>
+						
+						<h:outputText value="#{msg.label_hora_atendimento_servico}" />
+						<p:inputText id="hrAtendimento" size="8" onkeypress="formatar(this, '##:##');" binding="#{atendimentoController.horaAtual}"/>
+						
+						<h:outputText value="#{msg.label_nome_atendimento_servico}" />
+				    	<p:selectOneMenu id="servico" value="#{atendimentoController.atendimento.servicos.id}">
+				    		<f:selectItem itemLabel="Selecione.." itemValue=""/>
+				    		<f:selectItems value="#{atendimentoController.listaServico}" var="servicos" itemLabel="#{servicos.nome}" itemValue="#{servicos.id}"/>
+				    		<p:ajax event="change" listener="#{atendimentoController.atribuirValorServicoListener}" update="preco"/>
+				    	</p:selectOneMenu>
+				    	
+						<h:outputText value="#{msg.label_preco_agendamento_servico}" />
+						<p:inputText id="preco" size="12" onkeyup="moeda(this);" binding="#{atendimentoController.precoServicoText}" maxlength="10"/>				    	
+						
+						<h:outputText value="#{msg.label_nome_cliente_atendimento_servico}" />
+				    	<p:selectOneMenu id="clientes" value="#{atendimentoController.atendimento.clientes.id}">
+				    		<f:selectItem itemLabel="Selecione.." itemValue=""/>
+				    		<f:selectItems value="#{atendimentoController.listaClientes}" var="clientes" itemLabel="#{clientes.nome}" itemValue="#{clientes.id}"/>
+				    	</p:selectOneMenu>
+						
+						<h:outputText value="#{msg.label_executor_atendimento_servico}" />
+				    	<p:selectOneMenu id="profissional" value="#{atendimentoController.atendimento.funcionarios.id}">
+				    		<f:selectItem itemLabel="Selecione.." itemValue=""/>
+				    		<f:selectItems value="#{atendimentoController.listaFuncionarios}" var="funcionarios" itemLabel="#{funcionarios.nome}" itemValue="#{funcionarios.id}"/>
+				    	</p:selectOneMenu>
+						
+						<h:outputText value="#{msg.label_descricao_atendimento_servico}" />
+						<p:inputTextarea id="descricao" rows="5" cols="40" value="#{atendimentoController.atendimento.descricao}"/>
+						
+						<h:outputText value="#{msg.label_status_atendimento}" />
+				    	<p:selectOneMenu id="status" value="#{atendimentoController.atendimento.statusAtendimento}">
+				    		<f:selectItem itemLabel="Selecione.." itemValue=""/>
+				    		<f:selectItem itemLabel="Atendido" itemValue="Atendido"/>
+				    		<f:selectItem itemLabel="Aguardando" itemValue="Aguardando"/>
+				    		<f:selectItem itemLabel="Cancelado" itemValue="Cancelado"/>
+				    	</p:selectOneMenu>						
+						
+						<p:commandButton id="botaoAtendimento" value="#{msg.botao_cadastro_atendimento_servico}" action="#{atendimentoController.cadastrarAtendimento}" update="grid, messageAtendimento" icon="ui-icon-disk"/>
+						<p:growl id="messageAtendimento" showDetail="true" sticky="true" />
+					</h:panelGrid>
+				</p:panel>	
+			</div>
+		</h:form>	    
+    </p:layoutUnit>
+</ui:composition>

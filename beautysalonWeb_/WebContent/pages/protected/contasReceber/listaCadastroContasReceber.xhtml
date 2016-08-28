@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"
+      template="/pages/protected/template/telaHome.xhtml">
+      
+    <ui:define name="header">
+         <ui:include src="/pages/protected/template/header/header.xhtml"/>
+    </ui:define>
+      
+	<ui:define name="corpo">
+		<p:layoutUnit position="center" header="Lista de Contas a Receber">
+			<h:form id="formContasReceber">
+				<p:panel id="listacontasreceber" styleClass="listacontasreceber" style="float:center; width:1430px;">
+					
+					<div align="center">
+						<p:dataTable id="tableContasReceber" var="contasReceber" value="#{contasReceberController.listaContasReceberDataModel}" rowKey="#{contasReceber.id}" emptyMessage="#{msg.mensagem_empty_lista}"
+									 paginator="true" selection="#{contasReceberController.contasReceberSelected}" selectionMode="single" tableStyle="width:auto;" rows="4">
+			                
+			                <p:ajax event="rowSelect" update=":formContasReceber:display" oncomplete="contasReceberDialog.show()"/>
+			                <p:ajax event="rowDblselect" listener="#{contasReceberController.onRowDblselect}" />
+			                
+				   			<p:column sortBy="#{contasReceber.dataVencimento}" filterBy="#{contasReceber.dataVencimento}">
+		   			            <f:facet name="header">  
+					                <h:outputText value="Vencimento" />  
+					            </f:facet>		   			  
+					        	<h:outputText value="#{contasReceber.dataVencimento}" />
+					        </p:column>		                
+			                
+				   			<p:column sortBy="#{contasReceber.dataRecebimento}" filterBy="#{contasReceber.dataRecebimento}">
+		   			            <f:facet name="header">  
+					                <h:outputText value="Recebimento" />  
+					            </f:facet>		   			  
+					        	<h:outputText value="#{contasReceber.dataRecebimento}" />
+					        </p:column>		                
+			                
+				   			<p:column sortBy="#{contasReceber.cliente}" width="210" filterBy="#{contasReceber.cliente}">
+		   			            <f:facet name="header">  
+					                <h:outputText value="Cliente" />  
+					            </f:facet>		   			  
+					        	<h:outputText value="#{contasReceber.cliente}" />
+					        </p:column>		                
+			                
+				   			<p:column sortBy="#{contasReceber.documento}" width="240" filterBy="#{contasReceber.documento}">
+		   			            <f:facet name="header">  
+					                <h:outputText value="Documento" />  
+					            </f:facet>
+					        	<h:outputText value="#{contasReceber.documento}" />   
+					        </p:column>
+					                         
+				   			<p:column sortBy="#{contasReceber.valorParcela}" filterBy="#{contasReceber.valorParcela}">
+		   			            <f:facet name="header">  
+					                <h:outputText value="Valor da Parcela" />  
+					            </f:facet>		   			  
+					        	<h:outputText value="#{contasReceber.valorParcela}" />
+					        </p:column>
+					                         
+				   			<p:column sortBy="#{contasReceber.valorAReceber}" filterBy="#{contasReceber.valorAReceber}">
+		   			            <f:facet name="header">  
+					                <h:outputText value="Valor a Receber" />  
+					            </f:facet>		   			  
+					        	<h:outputText value="#{contasReceber.valorAReceber}" />
+					        </p:column>
+					                         
+				   			<p:column sortBy="#{contasReceber.valorRecebido}" filterBy="#{contasReceber.valorRecebido}">
+		   			            <f:facet name="header">  
+					                <h:outputText value="Valor Recebido" />  
+					            </f:facet>		   			  
+					        	<h:outputText value="#{contasReceber.valorRecebido}" />
+					        </p:column>
+					                         
+				   			<p:column sortBy="#{contasReceber.totalAReceber}" filterBy="#{contasReceber.totalAReceber}">
+		   			            <f:facet name="header">  
+					                <h:outputText value="Total a Receber" />  
+					            </f:facet>		   			  
+					        	<h:outputText value="#{contasReceber.totalAReceber}" />
+					        </p:column>
+					                         
+				   			<p:column sortBy="#{contasReceber.statusContasReceber}" filterBy="#{contasReceber.statusContasReceber}">
+		   			            <f:facet name="header">  
+					                <h:outputText value="Status" />  
+					            </f:facet>		   			  
+					        	<h:outputText value="#{contasReceber.statusContasReceber}" />
+					        </p:column>
+					                         
+		                </p:dataTable>
+	                </div>
+	                
+		             <p:dialog id="dialogContasReceber" onShow="show(this);" header="Contas a Receber" widgetVar="contasReceberDialog" resizable="false"  
+		              			showEffect="explode" hideEffect="explode">  
+				  		<p:growl id="messageContasReceber" showDetail="true" sticky="true" />
+				        <h:panelGrid id="display" columns="2" cellpadding="4">  
+				  
+				            <f:facet name="header">  
+				                <h:outputText value="Contas a Receber" />  
+				            </f:facet>  
+				  
+				            <h:outputText value="Data Vencimento:" />  
+				            <p:inputText size="12" value="#{contasReceberController.contasReceberSelected.dataVencimento}" onkeypress="formatar(this, '##/##/####');" disabled="true"/> 
+				  
+				            <h:outputText value="Credor a Pagar:" />
+							<p:inputText size="30" value="#{contasReceberController.contasReceberSelected.cliente}"/>
+				  
+				            <h:outputText value="Parcelas:" />  
+				            <p:inputText onkeypress="return numero(event);" size="4" value="#{contasReceberController.contasReceberSelected.nroParcelas}" />
+				            
+							<h:outputText value="Parcelas Pagas:" />  
+				            <p:inputText onkeypress="return numero(event);" size="4" value="#{contasReceberController.contasReceberSelected.nroParcelasRecebidas}" disabled="true"/>			            
+				            
+							<h:outputText value="Parcelas a Pagar:" />  
+				            <p:inputText id="dialogParcelasPagar" onkeypress="return numero(event);" size="4" value="#{contasReceberController.contasReceberSelected.nroParcelasAReceber}" disabled="true"/>  
+				            
+				            <h:outputText value="Valor das Parcelas:" />  
+				            <p:inputText onkeyup="moeda(this);" size="15" value="#{contasReceberController.contasReceberSelected.valorParcela}" />
+				  
+				            <h:outputText value="Total a Pagar:" />  
+				            <p:inputText onkeyup="moeda(this);" size="15" value="#{contasReceberController.contasReceberSelected.totalAReceber}" />  
+				            
+							<h:outputText value="#{msg.label_contas_pagar_status}" />
+					    	<p:selectOneMenu id="status" value="#{contasReceberController.contasReceberSelected.statusContasReceber}" >
+					    		<f:selectItem itemLabel="Pendente" itemValue="Pendente"/>
+					    		<f:selectItem itemLabel="Cancelada" itemValue="Cancelada"/>
+					    		<f:selectItem itemLabel="Deferida" itemValue="Deferida"/>
+					    	</p:selectOneMenu>			              
+				        </h:panelGrid>
+				        <h:panelGrid columns="3" cellpadding="15">
+				            <p:commandButton action="#{contasReceberController.alterarContasAReceber}" value="#{msg.botao_atualizar_dialog}" icon="ui-icon-arrowrefresh-1-w" oncomplete="contasReceberDialog.hide(); #{contasReceberController.listaContasReceberDataModel}"/>  
+				            <p:commandButton action="#{contasReceberController.darBaixa}" value="#{msg.botao_darbaixa_dialog}" update=":formContasReceber:displayBaixa" />
+				            <p:commandButton action="#{contasReceberController.excluirContasAReceber}" value="#{msg.botao_excluir_dialog}" style="float:right;" icon="ui-icon-close" update="messageContasReceber" oncomplete="contasReceberDialog.hide(); #{contasReceberController.listaContasReceberDataModel}"/>  
+				        </h:panelGrid>  
+				    </p:dialog>
+				    
+				    <p:dialog id="dialogBaixa" closable="false" header="Baixa" widgetVar="baixaDialog" resizable="false"  
+		              			showEffect="explode" hideEffect="explode">  
+				        <h:panelGrid id="displayBaixa" columns="2" cellpadding="4">
+				        	<h:outputText value="Data Pagamento:" />  
+				            <p:calendar size="12" maxlength="10" showOn="button" onkeypress="formatar(this, '##/##/####');" binding="#{contasReceberController.dataRecebimentoText}"/>
+				            
+							<h:outputText value="Parcelas a Receber:" />  
+				            <p:inputText onkeypress="return numero(event);" size="4" binding="#{contasReceberController.nrParcelasText}"/>			            
+				        	
+				            <h:outputText value="Valor das Parcelas:" />  
+				            <p:inputText onkeyup="moeda(this);" size="15" binding="#{contasReceberController.valorParcelaText}"/>
+				  
+				            <h:outputText value="Total a Receber:" />  
+				            <p:inputText onkeyup="moeda(this);" size="15" binding="#{contasReceberController.totalReceberText}" disabled="true"/>
+				    
+				    		<h:panelGroup>
+				            	<p:commandButton value="Concluir" action="#{contasReceberController.concluirBaixa}" update="messageConcluirContasReceber"/>
+				            	<p:growl id="messageConcluirContasReceber" showDetail="true" sticky="true" />
+				    		</h:panelGroup>
+							<p:commandButton value="Cancelar" style="float:right;" icon="ui-icon-close" onclick="contasReceberDialog.show();baixaDialog.hide();"/>			            			        
+				        </h:panelGrid>  
+		            </p:dialog> 				     
+				</p:panel>
+			</h:form>
+		</p:layoutUnit>
+    </ui:define>
+</ui:composition>

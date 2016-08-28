@@ -1,0 +1,61 @@
+<project name="Java Standard Portlet Build Script" default="archive_and_deploy" basedir=".">
+ 
+	<!-- This is a generic build script for building portlets. -->
+
+	<!-- init loads properties, starts logs and deletes old classes -->
+	<target name="init" description="properties, logs and cleans">
+		<!-- properties -->
+		<property file="build.properties" />
+		<!-- logs -->
+		<record name="${basedir}/build_${context.root}_log.txt" loglevel="error" />
+		<!-- announce -->
+		<echo message="Building: ${context.root}." />
+		<!-- clean -->
+
+	</target>
+
+	<!-- archive_and_deploy creates a .war file and saves is in the location
+		 from which you deploy web applications. -->
+	<target name="archive_and_deploy" depends="init" description="makes a .war file and saves it to the deployment location">
+		<zip destfile="${deployment.dir}/${warfile.name}">
+			<zipfileset dir="../WebContent" prefix="">
+				<include name="**/*.class" />
+				<include name="**/*.properties" />
+				<include name="**/*.jar" />
+				<include name="**/*.xml" />
+				<include name="**/*.jsp" />
+				<include name="**/*.xhtml" />
+				<include name="**/*.gif" />
+				<include name="**/*.jpg" />
+				<include name="**/*.css" />
+				<include name="**/*.js" />
+			</zipfileset>
+			<zipfileset dir="../WebContent" prefix="META-INF">
+				<include name="**/*.*" />
+			</zipfileset>
+		</zip>
+		<copy  todir="C:/Java/Servers/JBoss/jboss-6.1.0.Final/server/default/deploy">
+			<fileset dir="../">
+				<include name="**/*.war"/>
+			</fileset>
+	  	</copy>
+	</target>
+
+	<!-- compiles the source 
+	<target name="compile" depends="init" description="compiles source">
+		<javac srcdir="../src" destdir="../WebContent" debug="on">
+			<classpath>
+				<fileset dir="../WEB-INF/lib">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
+		 <copy todir="../WEB-INF/classes/i18n">
+			<fileset dir="../WEB-INF/src/i18n">
+					<include name="*.properties" />
+			</fileset>
+		</copy>
+	</target> -->
+
+</project>
+

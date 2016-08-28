@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"
+      template="/pages/protected/template/telaHome.xhtml">
+      
+    <ui:define name="header">
+         <ui:include src="/pages/protected/template/header/header.xhtml"/>
+    </ui:define>
+      
+	<ui:define name="corpo">
+		<p:layoutUnit position="center" header="Lista de Históricos">
+		<h:form id="formHistorico">
+			<p:panel id="listahistoricos" styleClass="listahistoricos" style="float:center; width:885px;">
+				
+				<div align="center">
+					<p:dataTable id="tableHistoricos" var="historicos" value="#{historicoController.listaHistoricoFinanceiroDataModel}" rowKey="#{historicos.id}" emptyMessage="#{msg.mensagem_empty_lista}"
+								 paginator="true" selection="#{historicoController.historicoFinanceiroSelected}" selectionMode="single" tableStyle="width:auto;" rows="4">
+		                
+		                <p:ajax event="rowSelect" update=":formHistorico:display" oncomplete="historicoDialog.show()"/>
+		                <p:ajax event="rowDblselect" listener="#{historicoController.onRowDblselect}" />
+		                
+			   			<p:column sortBy="#{historicos.id}" width="110" filterBy="#{historicos.id}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Código" />  
+				            </f:facet>
+				        	<h:outputText value="#{historicos.id}" />   
+				        </p:column>
+		                
+			   			<p:column sortBy="#{historicos.historico}" width="700" filterBy="#{historicos.historico}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Histórico" />  
+				            </f:facet>
+				        	<h:outputText value="#{historicos.historico}" />   
+				        </p:column>
+				                         
+	                </p:dataTable>
+                </div>
+                
+	             <p:dialog id="dialogHistorico" header="Histórico" widgetVar="historicoDialog" resizable="false"  
+	              			showEffect="explode" hideEffect="explode">  
+			  		<p:growl id="messageHistorico" showDetail="true" sticky="true" />
+			        <h:panelGrid id="display" columns="2" cellpadding="4">  
+			  
+			            <f:facet name="header">  
+			                <h:outputText value="Histórico" />  
+			            </f:facet>  
+			  
+			            <h:outputText value="Nome:" />  
+			            <p:inputText value="#{historicoController.historicoFinanceiroSelected.historico}" size="60"/>  
+			  
+			            <p:commandButton action="#{historicoController.alterarHistoricoFinanceiro}" value="#{msg.botao_atualizar_dialog}" icon="ui-icon-arrowrefresh-1-w" oncomplete="historicoDialog.hide(); #{historicoController.listaHistoricoFinanceiroDataModel}"/>  
+			            <p:commandButton action="#{historicoController.excluirHistoricoFinanceiro}" value="#{msg.botao_excluir_dialog}" style="float:right;" icon="ui-icon-close" update="tableHistoricos, messageHistorico" oncomplete="historicoDialog.hide(); #{historicoController.listaHistoricoFinanceiroDataModel}"/>  
+			        </h:panelGrid>  
+			    </p:dialog> 
+			</p:panel>
+		</h:form>
+		</p:layoutUnit>
+    </ui:define>
+</ui:composition>

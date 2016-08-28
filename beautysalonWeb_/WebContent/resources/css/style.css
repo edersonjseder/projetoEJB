@@ -1,0 +1,368 @@
+body { margin:0; font-size:11px; line-height:32px; font-family: Tahoma, Arial; background: url(../resources/images/body_bckg.jpg) repeat-x #056caa;}
+a { color:#68d3ed; text-decoration:underline;}
+a:hover { text-decoration:none;}
+
+.item { color:#68d3ed; text-decoration:underline;}
+.item:hover { text-decoration:none;}
+
+h1 { padding:0px; text-transform:uppercase; font-size:18px; color:#000; background-color:#818181; font-weight:normal; color:#fff; margin: 10px 0 ;height:21px;}
+h1 span { background:#616161; padding:0px 10px 0px 0px;}
+p {margin:0; background:#616161;}
+#header {background:url(../resources/images/header_bckg.jpg) repeat-x #0287c2; clear:both; width:100%; height:161px;  }
+#left_header { float:left; width:380px; background: url(../resources/images/left_header.jpg) no-repeat; height:161px;}
+#right_header { float:right;  width:321px; background: url(../resources/images/right_header.jpg) no-repeat; height:161px;}
+
+.painelFuncionarioCadastro {
+	width:470px;
+}
+
+.painelClienteCadastro {
+	width:470px;
+}
+
+.painelProdutoCadastro {
+	width:470px;
+}
+
+.painelServicoCadastro {
+	width:470px;
+}
+
+#logo {position:absolute; text-align:center; width:95%; text-align:center; margin-top:50px; text-decoration:none; color:#FFFFFF; font-size:23px;}
+#logo a {text-decoration:none; color:#FFFFFF; font-size:23px; }
+#menu { height:35px; clear:both; padding-top:5px; }
+#menu ul { margin:0; padding:0;}
+#menu ul li{ display:inline-block; float:left; width:160px; list-style:none; text-align:center; padding-left: 30px;}
+#menu a { display:block; float:left; width:104px; font-size:12px; text-transform:uppercase; text-decoration:none; color:#000000; text-decoration:none; font-weight:bold }
+#menu a:hover {color:#68d3ed;}
+
+#content {clear:both; background-color:#252525; width:100%;}
+#content_top { height:20px;}
+#content_top_left {float:left; width:20px; height:20px; background: url(../resources/images/left_top_round.gif) no-repeat;}
+#content_top_right {float:right; width:20px; height:20px; background: url(../resources/images/right_top_round.gif) no-repeat;}
+#content_bottom { clear:both;height:16px;}
+#content_bottom_left {float:left; width:20px; height:16px; background: url(../resources/images/left_bottom_round.gif) no-repeat;}
+#content_bottom_right {float:right; width:20px; height:16px; background: url(../resources/images/right_bottom_round.gif) no-repeat;}
+
+#sidebar {float:left; width:0px; padding-left:10px;}
+#sidebar p {background-color:#fff; padding:0 75px;}
+#sidebar_top { height:10px; background:url(../resources/images/top_sidebar.gif) no-repeat;background-color:white;}
+#sidebar_body { background-color:#fff; font-size: 16px;}
+#sidebar_bottom { height:23px; background:url(../resources/images/bottom_sidebar.gif) no-repeat;}
+#sidebar ul {margin:0; padding:0 0 0 40px;}
+#sidebar ul li { padding:0; list-style:none;}
+#sidebar a {color:#000; font-size:11px;}
+#sidebar h1 {color:#0676bd; font-size:12px; font-weight:bold; padding:10px 0 0 20px; background-color:#fff; margin:0;}
+
+
+#sidebar2 {float:right; width:90px; padding-left:0px;}
+#sidebar2 p {background-color:#fff; padding:0 25px;}
+#sidebar2_body { background-color:#fff; width: 90px; font-size: 14px;}
+
+
+.estilo_texto{
+	font-family: Times New Roman, Arial, sans-serif;
+	font-size: 15;
+	font-style: normal;
+	color: #000066;	
+}
+
+.estilo_texto_label{
+	font-family: Times New Roman, Arial, sans-serif;
+	font-size: 15;
+	font-style: normal;
+	color: #000066;	
+}
+
+.estilo_texto_label_lateral{
+	font-family: Times New Roman, Arial, sans-serif;
+	font-size: 18;
+	font-style: italic;
+	font-weight: bold;
+	color: #333333;	
+}
+
+.calendar{
+	font-style: italic;
+}
+
+#text {background-color:#616161; margin:0px 10px 0px 10px; width:auto; vertical-align:top; color:#fff;}
+#text_top {}
+#text_top_left {float:left; width:13px; height:10px; background:url(../resources/images/left_top_content.gif) no-repeat;}
+#text_top_right {float:right; width:11px; height:10px; background:url(../resources/images/rigth_top_content.gif) no-repeat;}
+#text_bottom { float:left;height:16px; background:url(../resources/images/middle_bottom_content.gif) repeat-x; width:100%;}
+#text_bottom_left {float:left; width:11px; height:16px; background: url(../resources/images/left_bottom_content.gif) no-repeat;}
+#text_bottom_right {float:right; width:11px; height:16px; background: url(../resources/images/right_bottom_content.gif) no-repeat;}
+
+#text_body { padding:10px 20px 10px 20px;}
+#text_body_inicio { padding:10px 245px 10px 245px;}
+#text_body_inicio_admin { padding:60px 145px 60px 145px;}
+#text_body_inicio_paciente { padding:10px 50px 10px 50px;}
+#text_body_inicio_user { padding:10px 110px 10px 110px;}
+#text_body_cadastro_convenio { padding:10px 20px 10px 20px;}
+#text_body_cadastro_especialidade { padding:10px 20px 10px 20px;}
+#text_body_cadastro_paciente { padding:10px 35px 10px 13px;}
+#text_body_cadastro_tratamento { padding:10px 15px 10px 15px;}
+#text_body_cadastro_atendimento { padding:10px 80px 10px 260px;}
+#text_body_cadastro { padding:10px 80px 10px 60px;}
+#text_body_alteracao { padding:10px 80px 10px 60px;}
+#text_body_inicio_login { padding:10px 387px 10px 387px;}
+
+
+#foot_text { padding-left:50px; background:url(../resources/images/foot_text.gif) no-repeat; color:#a8a8a8; font-size:10px; line-height:13px; margin:20px 0 0 0;}
+
+#footer {background:url(../resources/images/footer_bckg.jpg) #424e4f; height:74px; clear:both;  }
+#left_footer { float:left; padding:30px 0 0 30px; color:#fff; font-size:12px;}
+#left_footer a { color:#fff;}
+#left_footer a:hover { text-decoration:none;}
+#right_footer { float:right;  padding:30px 30px 0 0; color:#fff;  font-size:12px; text-align:right;}
+#right_footer a { color:#fff;}
+#right_footer a:hover { text-decoration:none;}
+
+.estilo_column_usuario {
+	color: #FFF;
+	font-weight: bold;
+	font-family: Times New Roman;
+	text-align: center;
+	border: 1px solid #F8F8FF;
+	width: 560px;
+}
+
+.estiloTextoUsuario {
+	color: #696969;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 15px;
+	font-family: Times New Roman;
+	text-align: center;
+}
+
+.estiloTextoUsuarioPanel {
+	color: #696969;
+	font-style: italic;
+	font-size: 18px;
+	font-family: Times New Roman;
+}
+
+.estilo_column_convenio {
+	color: #FFF;
+	font-weight: bold;
+	font-family: Times New Roman;
+	text-align: center;
+	border: 1px solid #F8F8FF;
+	width: 560px;
+}
+
+.estiloTextoConvenio {
+	color: #696969;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 15px;
+	font-family: Times New Roman;
+	text-align: center;
+}
+
+.estiloTextoConvenioPanel {
+	color: #696969;
+	font-style: italic;
+	font-size: 18px;
+	font-family: Times New Roman;
+}
+
+.estilo_column_medicamento {
+	color: #FFF;
+	font-weight: bold;
+	font-family: Times New Roman;
+	text-align: center;
+	border: 1px solid #F8F8FF;
+	width: 400px;
+}
+
+.estiloTextoMedicamento {
+	color: #696969;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 15px;
+	font-family: Times New Roman;
+	text-align: center;
+}
+
+
+.estilo_column_medico {
+	color: #FFF;
+	font-weight: bold;
+	font-family: Times New Roman;
+	text-align: center;
+	border: 1px solid #F8F8FF;
+	width: 400px;
+}
+
+.estiloTextoMedico {
+	color: #696969;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 15px;
+	font-family: Times New Roman;
+	text-align: center;
+}
+
+.estiloTextoMedicoPanel {
+	color: #696969;
+	font-style: italic;
+	font-size: 18px;
+	font-family: Times New Roman;
+}
+
+.estilo_column_paciente {
+	color: #FFF;
+	font-weight: bold;
+	font-family: Times New Roman;
+	text-align: center;
+	border: 1px solid #F8F8FF;
+	width: 800px;
+}
+
+.estiloTextoPaciente {
+	color: #696969;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 15px;
+	font-family: Times New Roman;
+	text-align: center;
+}
+
+.estiloTextoPacientePanel {
+	color: #696969;
+	font-style: italic;
+	font-size: 18px;
+	font-family: Times New Roman;
+}
+
+.estilo_column_tratamento {
+	color: #FFF;
+	font-weight: bold;
+	font-family: Times New Roman;
+	text-align: center;
+	border: 1px solid #F8F8FF;
+	width: 400px;
+}
+
+.estiloTextoTratamento {
+	color: #696969;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 15px;
+	font-family: Times New Roman;
+	text-align: center;
+}
+
+.estiloTextoTratamentoPanel {
+	color: #696969;
+	font-style: italic;
+	font-size: 18px;
+	font-family: Times New Roman;
+}
+
+.negritoModalPanel {
+	color:#6b7272;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	font-style: italic;
+	text-align: center;
+}
+
+.estilo_column_atendimento {
+	color: #FFF;
+	font-weight: bold;
+	font-family: Times New Roman;
+	text-align: center;
+	border: 1px solid #F8F8FF;
+	width: 400px;
+}
+
+.estiloTextoAtendimento {
+	color: #696969;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 15px;
+	font-family: Times New Roman;
+	text-align: center;
+}
+
+/*------------------------------ Botões ------------------------------*/
+
+/******* Botão opções entre 'Administrador' e 'Usuario' *******/
+.botao:visited { /*Botao visitado*/
+background: #00BFFF;
+color: #fff;
+text-decoration: none;
+}
+
+.botao{ /* A classe botao */
+font-weight: bold; /* foont em negrito */
+font-family: Times New Roman;
+font-size: 16px;
+font-variant: small-caps;
+text-align: center;
+border: 1px solid #F8F8FF; /* Borda com 1px de espessura e cor em hexedecimal */
+text-decoration: none; /* Retira o sublinhado do link */
+display: block; /* Para que fique do tamanho determinado */
+width: 127px; /* Largura */
+color: #4169E1; /* Cor do texto */
+background-color: #F8F8FF;
+}
+
+/* Quando passar o mouse sobre*/
+.botao:hover{ /* Hover ação do mouse */
+color: #FFF; /* Muda a cor do texto p/ branco */
+background: #00BFFF; /* Muda a cor do fundo para Azul*/
+border: 1px solid #00BFFF; /* Muda a cor da borda para Azul*/
+}
+/******* Botão opções entre 'Administrador' e 'Usuario' - fim *******/
+
+#botaoCadastro{ /* A classe botao */
+font-weight: bold; /* foont em negrito */
+font-family: Arial;
+font-size: 18px;
+font-variant: small-caps;
+border: 1px solid #F8F8FF; /* Borda com 1px de espessura e cor em hexedecimal */
+text-decoration: none; /* Retira o sublinhado do link */
+display: block; /* Para que fique do tamanho determinado */
+width: 120px; /* Largura */
+color: #FFFFFF; /* Cor do texto - branco */
+background-color: #CE0B0B; /* Cor do fundo - vermelho*/
+behavior: url(border-radius.htc);/* arquivo para as bordas arredondadas funcionar no IE */
+border-radius: 5px; /* bordas arredondadas */
+-moz-border-radius: 5px; /* bordas arredondadas */
+-webkit-border-radius: 5px; /* bordas arredondadas */
+float: right;
+}
+
+/* Quando passar o mouse sobre*/
+#botaoCadastro:hover{ /* Hover ação do mouse */
+color: #FFFFCC; /* Muda a cor do texto p/ branco */
+background: #990000; /* Muda a cor do fundo para Vermelho escuro*/
+border: 1px solid #990000; /* Muda a cor da borda para Vermelho escuro*/
+}
+
+.buttonRodape {
+	background-image:url(../resources/images/bt_padrao.gif);
+	height:25px;
+	padding-top:4px;
+	padding-bottom:5px;
+	padding-left:9px;
+	padding-right:9px;
+	font-family: verdana; 
+	font-size: 12px;
+    text-align : center;
+	color: #000000;
+	border: 1;
+	border-color:#000000;
+	border-style: solid;
+	border-width: 1px;	
+	margin-right: 5px;
+	margin-top: 5px;
+	text-decoration: none;
+	width: 80px;
+}

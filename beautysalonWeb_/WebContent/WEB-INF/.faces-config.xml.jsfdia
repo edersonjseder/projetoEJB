@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#*" PATH="/*" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#*:0" NAME="item" PATH="/*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="loginPagina::#pages#login#login.xhtml"
+    NAME="output" PATH="/pages/login/login.xhtml"
+    TARGET="rules:#pages#login#login.xhtml" TITLE="loginPagina" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#login#login.xhtml"
+  PATH="/pages/login/login.xhtml" SHAPE="240,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#users#atendente#homePage.xhtml"
+  PATH="/pages/users/atendente/homePage.xhtml" SHAPE="240,257,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#pages#users#atendente#homePage.xhtml:0"
+   NAME="item" PATH="/pages/users/atendente/homePage.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="atendente::#pages#users#atendente#homePage.xhtml" NAME="output"
+    PATH="/pages/users/atendente/homePage.xhtml"
+    TARGET="rules:#pages#users#atendente#homePage.xhtml"
+    TITLE="atendente" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#users#caixa#homePage.xhtml"
+  PATH="/pages/users/caixa/homePage.xhtml" SHAPE="240,369,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#pages#users#caixa#homePage.xhtml:0"
+   NAME="item" PATH="/pages/users/caixa/homePage.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="caixa::#pages#users#caixa#homePage.xhtml"
+    NAME="output" PATH="/pages/users/caixa/homePage.xhtml"
+    TARGET="rules:#pages#users#caixa#homePage.xhtml" TITLE="caixa" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#users#administracao#homePage.xhtml"
+  PATH="/pages/users/administracao/homePage.xhtml" SHAPE="240,145,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#pages#users#administracao#homePage.xhtml:0"
+   NAME="item" PATH="/pages/users/administracao/homePage.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="administracao::#pages#users#administracao#homePage.xhtml"
+    NAME="output" PATH="/pages/users/administracao/homePage.xhtml"
+    TARGET="rules:#pages#users#administracao#homePage.xhtml"
+    TITLE="administracao" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#expired#sessionExpired.xhtml"
+  PATH="/pages/expired/sessionExpired.xhtml" SHAPE="32,129,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#pages#expired#sessionExpired.xhtml:0"
+   NAME="item" PATH="/pages/expired/sessionExpired.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="gerente::#pages#users#gerente#homePage.xhtml" NAME="output"
+    PATH="/pages/users/gerente/homePage.xhtml"
+    TARGET="rules:#pages#users#gerente#homePage.xhtml" TITLE="gerente" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#users#gerente#homePage.xhtml"
+  PATH="/pages/users/gerente/homePage.xhtml" SHAPE="240,481,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

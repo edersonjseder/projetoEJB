@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"
+      template="/pages/protected/template/telaHome.xhtml">
+      
+    <ui:define name="header">
+         <ui:include src="/pages/protected/template/header/header.xhtml"/>
+    </ui:define>
+      
+	<ui:define name="corpo">
+		<p:layoutUnit position="center" header="Lista de Atendimentos">
+		<h:form id="formAtendimento">
+			<p:panel id="listaatendimentos" styleClass="listaatendimentos" style="float:center; width:840px;">
+				<div align="center">
+					<p:dataTable id="tableAtendimentos" var="atendimentos" value="#{atendimentoController.listaAtendimentosDataModel}" rowKey="#{atendimentos.id}" emptyMessage="#{msg.mensagem_empty_lista}" 
+								 paginator="true" selection="#{atendimentoController.atendimentoSelected}" selectionMode="single" tableStyle="width:auto;" rows="4">
+				        
+				        <p:ajax event="rowSelect" update=":formAtendimento:display" oncomplete="atendimentoDialog.show()"/>
+		                <p:ajax event="rowDblselect" listener="#{atendimentoController.onRowDblselect}" />
+				        
+			   			<p:column sortBy="#{atendimentos.dataAtendimento}" filterBy="#{atendimentos.dataAtendimento}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Data" />  
+				            </f:facet>
+				        	<h:outputText value="#{atendimentos.dataAtendimento}" />   
+				        </p:column>
+		                
+			   			<p:column sortBy="#{atendimentos.horaAtendimento}" filterBy="#{atendimentos.horaAtendimento}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Horário" />  
+				            </f:facet>
+				        	<h:outputText value="#{atendimentos.horaAtendimento}" />   
+				        </p:column>
+		                
+			   			<p:column sortBy="#{atendimentos.funcionarios.nome}" filterBy="#{atendimentos.funcionarios.nome}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Profissional" />  
+				            </f:facet>
+				        	<h:outputText value="#{atendimentos.funcionarios.nome}" />   
+				        </p:column>
+		                
+			   			<p:column sortBy="#{atendimentos.servicos.nome}" filterBy="#{atendimentos.servicos.nome}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Serviço" />  
+				            </f:facet>
+				        	<h:outputText value="#{atendimentos.servicos.nome}" />   
+				        </p:column>
+		                
+			   			<p:column sortBy="#{atendimentos.statusAtendimento}" filterBy="#{atendimentos.statusAtendimento}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Status" />  
+				            </f:facet>
+				        	<h:outputText value="#{atendimentos.statusAtendimento}" />   
+				        </p:column>
+		                
+					</p:dataTable>
+				</div>
+				
+	             <p:dialog id="dialogAtendimento" header="Atendimento" widgetVar="atendimentoDialog" resizable="false"  
+	              			showEffect="explode" hideEffect="explode">  
+			  		<p:growl id="messageAtendimento" showDetail="true" sticky="true" />
+			        <h:panelGrid id="display" columns="2" cellpadding="4">  
+			  
+			            <f:facet name="header">  
+			                <h:outputText value="Atendimento" />  
+			            </f:facet>  
+			  
+			            <h:outputText value="Data:" />  
+			            <p:inputText size="12" value="#{atendimentoController.atendimentoSelected.dataAtendimento}" onkeypress="formatar(this, '##/##/####');"/>  
+			  
+			            <h:outputText value="Hora:" />  
+			            <p:inputText onkeypress="formatar(this, '##:##');" size="8" maxlength="5" value="#{atendimentoController.atendimentoSelected.horaAtendimento}"/>  
+			            
+			            <h:outputText value="Serviço:" />
+				    	<p:selectOneMenu id="servico" value="#{atendimentoController.atendimentoSelected.servicos.id}">
+				    		<f:selectItem itemLabel="Selecione.." itemValue=""/>
+				    		<f:selectItems value="#{atendimentoController.listaServico}" var="servicos" itemLabel="#{servicos.nome}" itemValue="#{servicos.id}"/>
+				    	</p:selectOneMenu>
+				    	
+				    	<h:outputText value="Cliente:" />
+				    	<p:selectOneMenu id="cliente" value="#{atendimentoController.atendimentoSelected.clientes.id}">
+				    		<f:selectItem itemLabel="Selecione.." itemValue=""/>
+				    		<f:selectItems value="#{atendimentoController.listaClientes}" var="clientes" itemLabel="#{clientes.nome}" itemValue="#{clientes.id}"/>
+				    	</p:selectOneMenu>	
+				    	
+				    	<h:outputText value="Profissional:" />
+				    	<p:selectOneMenu id="profissional" value="#{atendimentoController.atendimentoSelected.funcionarios.id}">
+				    		<f:selectItem itemLabel="Selecione o Profissional" itemValue="none"/>
+				    		<f:selectItems value="#{atendimentoController.listaFuncionarios}" var="funcionarios" itemLabel="#{funcionarios.nome}" itemValue="#{funcionarios.id}"/>
+				    	</p:selectOneMenu>				    				    	
+						
+						<h:outputText value="Descrição:" />
+						<p:inputTextarea id="descricao" rows="5" cols="40" value="#{atendimentoController.atendimentoSelected.descricao}"/>
+						
+						<h:outputText value="Status:" />
+				    	<p:selectOneMenu id="status" value="#{atendimentoController.atendimentoSelected.statusAtendimento}">
+				    		<f:selectItem itemLabel="Atendido" itemValue="Atendido"/>
+				    		<f:selectItem itemLabel="Aguardando" itemValue="Aguardando"/>
+				    		<f:selectItem itemLabel="Cancelado" itemValue="Cancelado"/>
+				    	</p:selectOneMenu>  
+			  
+			            <p:commandButton action="#{atendimentoController.alterarAtendimento}" value="#{msg.botao_atualizar_dialog}" icon="ui-icon-arrowrefresh-1-w" oncomplete="atendimentoDialog.hide(); #{atendimentoController.listaAtendimentosDataModel}"/>  
+			            <p:commandButton action="#{atendimentoController.excluirAtendimento}" value="#{msg.botao_excluir_dialog}" style="float:right;" icon="ui-icon-close" update="messageAtendimento" oncomplete="atendimentoDialog.hide(); #{atendimentoController.listaAtendimentosDataModel}"/>  
+			        </h:panelGrid>  
+			    </p:dialog>				
+			</p:panel>
+		</h:form>
+		</p:layoutUnit>
+    </ui:define>
+</ui:composition>

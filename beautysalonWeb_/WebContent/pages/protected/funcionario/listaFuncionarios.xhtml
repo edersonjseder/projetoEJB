@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"
+      template="/pages/protected/template/telaHome.xhtml">
+      
+    <ui:define name="header">
+         <ui:include src="/pages/protected/template/header/header.xhtml"/>
+    </ui:define>
+      
+	<ui:define name="corpo">
+		<p:layoutUnit position="center" header="#{msg.titulo_panel_lista_funcionarios}">
+		<h:form id="formFuncionario">
+			<p:panel id="listafuncionarios" styleClass="listafuncionarios" style="float:center; width:840px;">
+				<div align="center">
+					<p:dataTable id="tableFuncionario" var="funcionarios" value="#{funcionarioController.listaFuncionarioDataModel}" rowKey="#{funcionarios.id}" emptyMessage="#{msg.mensagem_empty_lista}" 
+								 paginator="true" selection="#{funcionarioController.funcionarioSelected}" selectionMode="single" tableStyle="width:auto;" rows="4">
+				        
+				        <p:ajax event="rowSelect" update=":formFuncionario:display" oncomplete="funcionarioDialog.show()"/>
+		                <p:ajax event="rowDblselect" listener="#{funcionarioController.onRowDblselect}" />
+				        
+			   			<p:column sortBy="#{funcionarios.nome}" filterBy="#{funcionarios.nome}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Nome" />  
+				            </f:facet>
+				        	<h:outputText value="#{funcionarios.nome}" />   
+				        </p:column>
+		                
+			   			<p:column sortBy="#{funcionarios.cpf}" filterBy="#{funcionarios.cpf}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="CPF" />  
+				            </f:facet>
+				        	<h:outputText value="#{funcionarios.cpf}" />   
+				        </p:column>
+		                
+			   			<p:column sortBy="#{funcionarios.dataAdmissao}" filterBy="#{funcionarios.dataAdmissao}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Admissão" />  
+				            </f:facet>
+				        	<h:outputText value="#{funcionarios.dataAdmissao}" />   
+				        </p:column>
+		                
+			   			<p:column sortBy="#{funcionarios.telefone}" filterBy="#{funcionarios.telefone}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Telefone" />  
+				            </f:facet>
+				        	<h:outputText value="#{funcionarios.telefone}" />   
+				        </p:column>
+		                
+			   			<p:column sortBy="#{funcionarios.email}" filterBy="#{funcionarios.email}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Email" />  
+				            </f:facet>
+				        	<h:outputText value="#{funcionarios.email}" />   
+				        </p:column>
+		                
+			   			<p:column sortBy="#{funcionarios.statusFuncionario}" filterBy="#{funcionarios.statusFuncionario}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Status" />  
+				            </f:facet>
+				        	<h:outputText value="#{funcionarios.statusFuncionario}" />   
+				        </p:column>
+		       			        
+					</p:dataTable>
+				</div>
+				
+	             <p:dialog id="dialogFuncionario" header="Funcionário" widgetVar="funcionarioDialog" resizable="true"  
+	              			showEffect="explode" hideEffect="explode" height="465" width="890">  
+			  		<p:growl id="messageFuncionario" showDetail="true" sticky="true" />
+			  		<h:panelGrid id="display" columns="1">
+						<p:wizard widgetVar="wiz" flowListener="#{funcionarioController.onFlowProcess}">
+						   	<div align="center">
+								<p:tab id="dadosPessoais" title="Dados Pessoais">
+									<p:panel id="cadastrofuncionariosDadosPessoais" styleClass="cadastrofuncionarios" header="Dados Pessoais" style="width:840px;">
+										<h:panelGrid id="personal" columns="2">
+											<h:outputText value="#{msg.label_nome_funcionario}" />
+											<p:inputText id="nomeFuncionario" size="40" value="#{funcionarioController.funcionarioSelected.nome}" required="true"/>
+											
+											<h:outputText value="#{msg.label_cpf_func}" />
+											<p:inputMask mask="999.999.999-99" id="cpf" onblur="consistenciaCPF(this.value);" size="16" value="#{funcionarioController.funcionarioSelected.cpf}" required="true"/>
+											
+											<h:outputText value="#{msg.label_sexo_func}" />
+											<p:selectOneRadio value="#{funcionarioController.funcionarioSelected.sexo}" id="sexo">
+												<f:selectItem itemLabel="Masculino" itemValue="M"/>
+												<f:selectItem itemLabel="Feminino" itemValue="F"/>
+											</p:selectOneRadio>
+													
+											<h:outputText value="#{msg.label_data_nasc_funcionario}" />
+											<p:inputText onkeypress="formatar(this, '##/##/####');" size="11" value="#{funcionarioController.funcionarioSelected.dataNascimento}"/>
+													
+											<h:outputText value="#{msg.label_telefone_funcionario}" />
+											<p:inputMask id="telefone" mask="(99) 9999-9999" size="16" value="#{funcionarioController.funcionarioSelected.telefone}"/>
+											
+											<h:outputText value="#{msg.label_email_funcionario}" />
+											<p:inputText id="email" size="40" onblur="validarEmail();" value="#{funcionarioController.funcionarioSelected.email}"/>
+										</h:panelGrid>
+									</p:panel>
+								</p:tab>
+								
+								<p:tab id="dadosProfissionais" title="Dados Profissionais">
+									<p:panel id="cadastrofuncionariosDadosProfissionais" styleClass="cadastrofuncionarios" header="Dados Profissionais" style="width:737px;">
+										<h:panelGrid id="professional" columns="2">
+											<h:outputText value="#{msg.label_cargo}" />
+											<p:inputText id="cargo" size="40" value="#{funcionarioController.funcionarioSelected.cargo}"/>
+											
+											<h:outputText value="#{msg.label_remuneracao}" />
+											<p:inputText id="remuneracao" onkeyup="moeda(this);" size="10" maxlength="10" value="#{funcionarioController.funcionarioSelected.remuneracao}"/>
+											
+											<h:outputText value="#{msg.label_data_admissao}" />
+											<p:inputText onkeypress="formatar(this, '##/##/####');" size="11" id="dtAdmissao" value="#{funcionarioController.funcionarioSelected.dataAdmissao}"/>
+											
+											<h:outputText value="#{msg.label_status_funcionario}" />
+											<p:selectBooleanCheckbox id="ativo" value="#{funcionarioController.funcionarioSelected.ativo}" >
+									    		<p:ajax event="change" listener="#{funcionarioController.habilitarDesabilitarCampoDataDemissaoDialog}" update="dtDemissao"/>
+											</p:selectBooleanCheckbox>
+											
+											<h:outputText value="#{msg.label_data_demissao}" />
+											<p:inputText onkeypress="return numero(event);" onblur="formatar(this, '##/##/####');" size="10" id="dtDemissao" disabled="true" binding="#{funcionarioController.dataDemissaoText}" value="#{funcionarioController.funcionarioSelected.dataDemissao}"/>
+										</h:panelGrid>
+									</p:panel>
+								</p:tab>
+								
+								<p:tab id="dadosEndereco" title="Endereço">
+									<p:panel id="cadastroEndereco" styleClass="cadastrofuncionarios" header="Dados de Endereço" style="width:737px;">
+										<h:panelGrid id="address" columns="2">
+											<h:outputText value="#{msg.label_endereco_func}" />
+									    	<p:inputText id="endereco" size="40" value="#{funcionarioController.funcionarioSelected.endereco.endereco}"/>
+											
+											<h:outputText value="#{msg.label_bairro_func}" />
+											<p:inputText id="bairro" size="20" value="#{funcionarioController.funcionarioSelected.endereco.bairro}"/>
+											
+											<h:outputText value="#{msg.label_estado_func}" />
+									    	<p:selectOneMenu value="#{funcionarioController.funcionarioSelected.endereco.estado.id}" id="estado">
+									    		<f:selectItem itemLabel="Selecione..." itemValue=""/>
+									    		<f:selectItems value="#{funcionarioController.listaEstados}" var="estados" itemLabel="#{estados.nome}" itemValue="#{estados.id}"/>
+									    		<p:ajax event="change" listener="#{funcionarioController.pesquisarCidadesAlteracao}" update="cidade"/>
+									    	</p:selectOneMenu>
+											
+											<h:outputText value="#{msg.label_municipio_func}" />
+									    	<p:selectOneMenu value="#{funcionarioController.funcionarioSelected.endereco.cidade.id}" id="cidade" binding="#{funcionarioController.comboCidade}" disabled="true">
+									    		<f:selectItem itemLabel="Selecione..." itemValue=""/>
+									    		<f:selectItems value="#{funcionarioController.listaCidades}" var="cidades" itemLabel="#{cidades.nome}" itemValue="#{cidades.id}"/>
+									    	</p:selectOneMenu>								
+											
+											<h:outputText value="#{msg.label_cep}" />
+											<p:inputMask mask="99999-999" value="#{funcionarioController.funcionarioSelected.endereco.cep}" required="true" requiredMessage="#{msg.mensagem_cep_obrigatorio}" id="cep" size="11"/>			
+										</h:panelGrid>
+									</p:panel>
+								</p:tab>
+								
+								<p:tab id="dadosLogin" title="Dados de Login">
+									<p:panel id="cadastroDadosLogin" styleClass="cadastrofuncionarios" header="Dados de Login" style="width:737px;">
+										<h:panelGrid id="loginData" columns="2">
+											<h:outputText value="#{msg.label_login_funcionario}" />
+											<p:inputText id="login" size="20" required="true" value="#{funcionarioController.funcionarioSelected.user.login}"/>
+											
+											<h:outputText value="#{msg.label_senha_funcionario}" />
+											<p:password id="senha" size="20" required="true" value="#{funcionarioController.senha}"/>
+											
+											<h:outputText value="#{msg.label_confirma_funcionario}" />
+											<p:password id="confirmaSenha" size="20" required="true" value="#{funcionarioController.confirmaSenha}"/>
+							
+											<h:outputText value="#{msg.label_grupo_funcionario}" />
+											<p:selectOneMenu value="#{funcionarioController.funcionarioSelected.userRole.role}" id="role">
+												<f:selectItem itemLabel="Selecione.." itemValue=""/>
+									    		<f:selectItem itemLabel="Administrador" itemValue="administrador"/>
+									    		<f:selectItem itemLabel="Atendente" itemValue="atendente"/>
+									    		<f:selectItem itemLabel="Caixa" itemValue="caixa"/>
+									    		<f:selectItem itemLabel="Gerência" itemValue="gerente"/>
+									    	</p:selectOneMenu>
+										</h:panelGrid>
+										<h:panelGrid columns="2">
+								            <p:commandButton action="#{funcionarioController.alterarFuncionario}" value="#{msg.botao_atualizar_dialog}" icon="ui-icon-arrowrefresh-1-w" oncomplete="funcionarioDialog.hide(); #{funcionarioController.listaFuncionarioDataModel}"/>  
+								            <p:commandButton action="#{funcionarioController.excluirFuncionario}" value="#{msg.botao_excluir_dialog}" style="float:right;" icon="ui-icon-close" update="messageFuncionario" oncomplete="funcionarioDialog.hide(); #{funcionarioController.listaFuncionarioDataModel}"/>		
+										</h:panelGrid>
+									</p:panel>
+								</p:tab>
+							</div>
+						</p:wizard> 			          
+			  		</h:panelGrid>
+			    </p:dialog>				
+			</p:panel>
+		</h:form>
+		</p:layoutUnit>
+    </ui:define>
+</ui:composition>

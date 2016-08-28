@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core">
+
+	<div>
+		<h:form>
+			<p:growl id="message" showDetail="true" sticky="true" />
+			<ul>
+				<li>
+					<p:commandButton id="agendamentoButton" value="#{msg.botao_menu_agendamento}" type="button" style="width:145px;"/>
+				    <p:slideMenu overlay="true" trigger="agendamentoButton" my="left top" at="left bottom" style="width:180px">
+				        <p:menuitem value="#{msg.botao_submenu_cadastrar}" action="#{agendamentoController.acessarCadastro}" ajax="false" icon="ui-icon-disk"/>  
+				        <p:menuitem value="#{msg.botao_submenu_listar}" action="#{agendamentoController.listarAgendamentos}" icon="ui-icon-search"/>
+				        <p:separator />  
+        				<p:menuitem value="#{msg.botao_submenu_home}" url="/pages/protected/home/homePage.xhtml" icon="ui-icon-extlink"/>   
+				    </p:slideMenu>
+				</li>
+				
+				<li>
+					<p:commandButton id="atendimentoButton" value="#{msg.botao_menu_atendimento}" type="button" style="width:145px;"/>
+				    <p:slideMenu overlay="true" trigger="atendimentoButton" my="left top" at="left bottom" style="width:180px">
+				        <p:menuitem value="#{msg.botao_submenu_cadastrar}" action="#{atendimentoController.acessarCadastro}" ajax="false" icon="ui-icon-disk"/>  
+				        <p:menuitem value="#{msg.botao_submenu_listar}" action="#{atendimentoController.listarAtendimentos}" icon="ui-icon-search"/>
+				        <p:separator />  
+        				<p:menuitem value="#{msg.botao_submenu_home}" url="/pages/protected/home/homePage.xhtml" icon="ui-icon-extlink"/>
+				    </p:slideMenu>
+				</li>
+				
+				<li>
+					<p:commandButton id="financeiroButton" value="#{msg.botao_menu_financeiro}" type="button" style="width:145px;"/>
+				    <p:slideMenu overlay="true" trigger="financeiroButton" my="left top" at="left bottom" style="width:180px">  
+				        <p:submenu label="Contas a Pagar">  
+				            <p:menuitem value="#{msg.botao_submenu_cadastrar}" url="/pages/protected/contasPagar/cadastroContasPagar.xhtml" icon="ui-icon-disk"/>  
+				            <p:menuitem value="#{msg.botao_submenu_listar}" action="#{contasPagarController.listarContasAPagar}" icon="ui-icon-search"/>  
+				        </p:submenu>  
+				        <p:submenu label="Contas a Receber">  
+				            <p:menuitem value="#{msg.botao_submenu_cadastrar}" url="/pages/protected/contasReceber/cadastroContasReceber.xhtml" icon="ui-icon-disk"/>  
+				            <p:menuitem value="#{msg.botao_submenu_listar}" action="#{contasReceberController.listarContasAReceber}" icon="ui-icon-search"/>  
+				        </p:submenu>  
+				        <p:submenu label="#{msg.botao_menu_caixa}">  
+				            <p:menuitem value="#{msg.botao_submenu_cadastrar}" action="#{caixaController.acessarCadastro}" icon="ui-icon-disk"/>  
+				            <p:menuitem value="#{msg.botao_submenu_listar}" action="#{caixaController.listarCaixas}" icon="ui-icon-search"/>  
+				        </p:submenu>
+				        <p:separator />
+				        <p:menuitem value="#{msg.botao_submenu_home}" url="/pages/protected/home/homePage.xhtml" icon="ui-icon-extlink"/> 
+				    </p:slideMenu> 
+				</li>
+				
+				<li>
+					<p:commandButton id="cadastrosButton" value="#{msg.botao_menu_cadastros}" update="message" type="button" style="width:145px;"/>
+				    <p:slideMenu overlay="true" trigger="cadastrosButton" my="left top" at="left bottom" style="width:180px">  
+				        <p:submenu label="#{msg.botao_menu_cliente}">  
+				            <p:menuitem value="#{msg.botao_submenu_cadastrar}" url="/pages/protected/cliente/cadastroCliente.xhtml" icon="ui-icon-disk"/>  
+				            <p:menuitem value="#{msg.botao_submenu_listar}" action="#{clienteController.listarClientes}" icon="ui-icon-search"/>  
+				        </p:submenu>  
+				        <p:submenu label="#{msg.botao_menu_fornecedor}">  
+					        <p:menuitem value="#{msg.botao_submenu_cadastrar}" url="/pages/protected/fornecedor/cadastroFornecedor.xhtml" ajax="false" icon="ui-icon-disk"/>  
+					        <p:menuitem value="#{msg.botao_submenu_listar}" action="#{fornecedorController.listarFornecedores}" icon="ui-icon-search"/> 
+				        </p:submenu>
+				        <p:submenu label="#{msg.botao_menu_funcionario}">  
+					        <p:menuitem value="#{msg.botao_submenu_cadastrar}" url="/pages/protected/funcionario/cadastroFuncionario.xhtml" ajax="false" icon="ui-icon-disk"/>  
+					        <p:menuitem value="#{msg.botao_submenu_listar}" action="#{funcionarioController.listarFuncionarios}" icon="ui-icon-search"/> 
+				        </p:submenu>
+				        <p:submenu label="#{msg.botao_menu_cadastro_produto}">  
+				            <p:menuitem value="#{msg.botao_submenu_cadastrar}" url="/pages/protected/produto/cadastroProduto.xhtml" icon="ui-icon-disk"/>  
+				            <p:menuitem value="#{msg.botao_submenu_listar}" action="#{produtoController.listarProdutos}" icon="ui-icon-search"/>  
+				        </p:submenu>				        				          
+				        <p:submenu label="#{msg.botao_menu_servico}">  
+					        <p:menuitem value="#{msg.botao_submenu_cadastrar}" url="/pages/protected/servico/cadastroServico.xhtml" ajax="false" icon="ui-icon-disk"/>  
+					        <p:menuitem value="#{msg.botao_submenu_listar}" action="#{servicoController.listarServicos}" icon="ui-icon-search"/> 
+				        </p:submenu>
+				        <p:submenu label="#{msg.botao_menu_cadastro_historico}">  
+					        <p:menuitem value="#{msg.botao_submenu_cadastrar}" url="/pages/protected/historico/cadastroHistorico.xhtml" ajax="false" icon="ui-icon-disk"/>  
+					        <p:menuitem value="#{msg.botao_submenu_listar}" action="#{historicoController.listarHistoricoFinanceiro}" icon="ui-icon-search"/> 
+				        </p:submenu>
+				        <p:separator />  
+				        <p:menuitem value="#{msg.botao_submenu_home}" url="/pages/protected/home/homePage.xhtml" icon="ui-icon-extlink"/>
+				    </p:slideMenu> 
+				</li>
+								
+				<li>
+					<p:commandButton id="estoqueButton" value="#{msg.botao_menu_estoque}" type="button" style="width:145px;"/>
+					<p:slideMenu overlay="true" trigger="estoqueButton" my="left top" at="left bottom" style="width:180px">
+						<p:submenu label="#{msg.botao_menu_movimentacao_estoque}">
+							<p:submenu label="#{msg.botao_submenu_estoque_entrada}">  
+								<p:menuitem value="#{msg.botao_submenu_cadastrar}" action="#{estoqueController.acessarCadastro}" icon="ui-icon-disk"/>  
+					            <p:menuitem value="#{msg.botao_submenu_listar}" action="#{estoqueController.listarEstoqueEntrada}" icon="ui-icon-search"/> 
+					        </p:submenu>
+							<p:submenu label="#{msg.botao_submenu_estoque_saida}">  
+								<p:menuitem value="#{msg.botao_submenu_cadastrar}" url="/pages/protected/estoque/saida/cadastroSaidaEstoque.xhtml" icon="ui-icon-disk"/>  
+					            <p:menuitem value="#{msg.botao_submenu_listar}" action="#{estoqueController.listarEstoqueSaida}" icon="ui-icon-search"/> 
+					        </p:submenu>					          
+				        </p:submenu>  
+				        <p:separator />
+				        <p:menuitem value="#{msg.botao_submenu_home}" url="/pages/protected/home/homePage.xhtml" icon="ui-icon-extlink"/>        				
+					</p:slideMenu>
+				</li>
+				
+				<li>
+					<p:commandButton id="sairButton" value="#{msg.botao_menu_sair}" action="#{home.logout}" style="width:150px;"/>
+				</li>
+			</ul>
+		</h:form>
+	</div>
+</ui:composition>

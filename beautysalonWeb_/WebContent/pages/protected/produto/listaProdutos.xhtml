@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"
+      template="/pages/protected/template/telaHome.xhtml">
+      
+    <ui:define name="header">
+         <ui:include src="/pages/protected/template/header/header.xhtml"/>
+    </ui:define>
+      
+	<ui:define name="corpo">
+		<p:layoutUnit position="center" header="Lista de Produtos">
+		<h:form id="formProduto">
+			<p:panel id="listaprodutos" styleClass="listaProdutos" style="float:center; width:840px;">
+				
+				<div align="center">
+					<p:dataTable id="tableProdutos" var="produtos" value="#{produtoController.listaProdutoDataModel}" rowKey="#{produtos.id}" emptyMessage="#{msg.mensagem_empty_lista}"
+								 paginator="true" selection="#{produtoController.produtoSelected}" selectionMode="single" tableStyle="width:auto;" rows="4">
+		                
+		                <p:ajax event="rowSelect" update=":formProduto:display" oncomplete="produtoDialog.show()"/>
+		                <p:ajax event="rowDblselect" listener="#{produtoController.onRowDblselect}" />
+		                
+			   			<p:column sortBy="#{produtos.nome}" filterBy="#{produtos.nome}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Nome" />  
+				            </f:facet>
+				        	<h:outputText value="#{produtos.nome}" />   
+				        </p:column>
+				                         
+			   			<p:column sortBy="#{produtos.marca}" filterBy="#{produtos.marca}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Marca" />  
+				            </f:facet>		   			  
+				        	<h:outputText value="#{produtos.marca}" />
+				        </p:column>
+				                         
+			   			<p:column sortBy="#{produtos.categoria}" filterBy="#{produtos.categoria}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Categoria" />  
+				            </f:facet>		   			  
+				        	<h:outputText value="#{produtos.categoria}" />
+				        </p:column>
+				                         
+			   			<p:column sortBy="#{produtos.preco}" filterBy="#{produtos.preco}">
+	   			            <f:facet name="header">  
+				                <h:outputText value="Preço" />  
+				            </f:facet>		   			  
+				        	<h:outputText value="#{produtos.preco}" />
+				        </p:column>
+				        
+	                </p:dataTable>
+                </div>
+                
+	             <p:dialog id="dialogProduto" header="Produto" widgetVar="produtoDialog" resizable="false"  
+	              			showEffect="explode" hideEffect="explode">  
+			  		<p:growl id="messageProduto" showDetail="true" sticky="true" />
+			        <h:panelGrid id="display" columns="2" cellpadding="4">  
+			  
+			            <f:facet name="header">  
+			                <h:outputText value="Produto" />  
+			            </f:facet>  
+			  
+			            <h:outputText value="Nome:" />  
+			            <p:inputText value="#{produtoController.produtoSelected.nome}" />  
+			  
+			            <h:outputText value="Marca:" />  
+			            <p:inputText value="#{produtoController.produtoSelected.marca}" />  
+			  
+			            <h:outputText value="Categoria:" />  
+			            <p:inputText value="#{produtoController.produtoSelected.categoria}" />  
+			  
+			            <h:outputText value="Preço:" />  
+			            <p:inputText onkeyup="moeda(this);" value="#{produtoController.produtoSelected.preco}" />
+			            
+			            <h:outputText value="Descrição" />
+						<p:inputTextarea id="descricao" rows="5" cols="30" value="#{produtoController.produtoSelected.descricao}"/>
+			            
+			            <p:commandButton action="#{produtoController.alterarProduto}" value="#{msg.botao_atualizar_dialog}" icon="ui-icon-arrowrefresh-1-w" oncomplete="produtoDialog.hide(); #{produtoController.listaProdutoDataModel}"/>  
+			            <p:commandButton action="#{produtoController.excluirProduto}" value="#{msg.botao_excluir_dialog}" style="float:right;" icon="ui-icon-close" update="messageProduto" oncomplete="produtoDialog.hide(); #{produtoController.listaProdutoDataModel}"/>  
+			        </h:panelGrid>  
+			    </p:dialog> 
+			</p:panel>
+		</h:form>
+		</p:layoutUnit>
+    </ui:define>
+</ui:composition>
